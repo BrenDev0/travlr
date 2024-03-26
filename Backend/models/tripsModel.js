@@ -1,9 +1,6 @@
 const mongoose = require("mongoose");
 
 const CountrySchema = new mongoose.Schema({
-  trips: [{ type: mongoose.Types.ObjectId, ref: "Trip" }],
-  users: [{ type: mongoose.Types.ObjectId, ref: "User" }],
-
   name: {
     type: String,
     required: true,
@@ -22,8 +19,6 @@ const CountrySchema = new mongoose.Schema({
 });
 
 const CitySchema = new mongoose.Schema({
-  trips: [{ type: mongoose.Types.ObjectId, ref: "Trip" }],
-  users: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   name: {
     type: String,
     required: true,
@@ -32,8 +27,6 @@ const CitySchema = new mongoose.Schema({
 });
 
 const PlaceSchema = new mongoose.Schema({
-  trips: [{ type: mongoose.Types.ObjectId, ref: "Trip" }],
-  users: [{ type: mongoose.Types.ObjectId, ref: "User" }],
   category: {
     type: String,
   },
@@ -46,8 +39,10 @@ const PlaceSchema = new mongoose.Schema({
   photos: [],
 });
 
+// trips --> countries --> cities ---> places
+
 const TripSchema = new mongoose.Schema({
-  user: { type: mongoose.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   countries: [CountrySchema],
   description: {
     type: String,
@@ -60,6 +55,7 @@ const TripSchema = new mongoose.Schema({
     endDate: {
       type: Date,
     },
+    photos: [],
   },
 });
 
