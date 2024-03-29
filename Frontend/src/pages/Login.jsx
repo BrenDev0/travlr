@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Form from "../components/Form";
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   return (
     <LoginStyled>
-      <Form />
+      <LoginForm />
     </LoginStyled>
   );
 };
