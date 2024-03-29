@@ -61,7 +61,7 @@ const FormStyled = styled.form`
     font-size: 20px;
 
     i {
-      font-size: 41px;
+      font-size: 2vw;
     }
 
     input {
