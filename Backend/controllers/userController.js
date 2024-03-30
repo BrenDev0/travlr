@@ -8,7 +8,7 @@ const createToken = (_id) => {
 };
 
 //login user
-const loginUser = async (req, res) => {
+const loginUser = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -36,6 +36,7 @@ const loginUser = async (req, res) => {
     });
 
     res.status(201).json({ message: "Log in successful", success: true });
+    next();
   } catch (error) {
     console.error(error);
   }
@@ -66,9 +67,9 @@ const signupUser = async (req, res, next) => {
       return res.json({ message: "Email already in use" });
     }
 
-    const hash = bcrypt.hash(password, 10);
+    const hash = await bcrypt.hash(password, 10);
 
-    const user = User.create({
+    const user = await User.create({
       name,
       email,
       password: hash,
