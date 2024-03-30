@@ -6,6 +6,10 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
         box-sizing: border-box;
         list-style: none;
+        font-family: "Ubuntu", sans-serif;
+         font-weight: 300;
+        font-style: normal;
+        font-size: 1vw;
         
     }
 

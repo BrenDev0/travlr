@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import LoginForm from "../components/LoginForm";
 import background from "../images/background.webp";
+import SignupForm from "../components/SignupForm";
 
-const Login = () => {
+const Signup = () => {
   return (
     <LoginStyled>
-      <LoginForm />
+      <SignupForm />
     </LoginStyled>
   );
 };
@@ -19,4 +19,4 @@ const LoginStyled = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `;
-export default Login;
+export default Signup;

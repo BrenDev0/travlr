@@ -2,26 +2,30 @@ import React from "react";
 import styled from "styled-components";
 import logo from "../images/earth.jpg";
 
-const LoginForm = () => {
+const SignupForm = () => {
   return (
     <FormStyled onSubmit={(e) => e.preventDefault()}>
       <div className="logo">
         <h1>travlr</h1>
-        <span>Share your adventure</span>
+        <span>Embark on an adventure</span>
       </div>
       <img src={logo} alt="globe" />
       <div className="form-inputs">
+        <i className="fa-solid fa-user"></i>
+        <input type="text" required placeholder="name..." />
+      </div>
+      <div className="form-inputs">
         <i className="fa-solid fa-envelope"></i>
-        <input type="text" placeholder="email..." />
+        <input type="text" required placeholder="email..." />
       </div>
 
       <div className="form-inputs">
         <i class="fa-solid fa-lock"></i>
-        <input type="text" placeholder="password..." />
+        <input type="text" required placeholder="password..." />
       </div>
-      <button>Login</button>
+      <button>Signup</button>
       <p>
-        Don't have an account? <a href="/signup">Signup</a>
+        Already have an account? <a href="/login">Login</a>
       </p>
     </FormStyled>
   );
@@ -67,7 +71,6 @@ const FormStyled = styled.form`
 
     input {
       border-radius: 5px;
-      width: 100%;
       height: 100%;
       margin-left: 10px;
       font-size: 16px;
@@ -82,10 +85,13 @@ const FormStyled = styled.form`
     border: none;
     border-radius: 10px;
   }
-  a {
+  a:link {
     text-decoration: none;
+  }
+
+  a:visited {
     color: red;
   }
 `;
 
-export default LoginForm;
+export default SignupForm;
