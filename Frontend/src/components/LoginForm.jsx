@@ -1,10 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../images/earth.jpg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useGlobalContext } from "../contex/GlobalContex";
 
 const LoginForm = () => {
+  const { access } = useGlobalContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const form = { email, password };
+      const success = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        form,
+        { withCredentials: true }
+      );
+      if (success) {
+        await access();
+        navigate("/");
+      }
+    } catch (error) {
+      setError(error.response.data.messgae);
+    }
+  };
+
   return (
-    <FormStyled onSubmit={(e) => e.preventDefault()}>
+    <FormStyled onSubmit={handleSubmit}>
       <div className="logo">
         <h1>travlr</h1>
         <span>Share your adventure</span>
@@ -12,14 +39,26 @@ const LoginForm = () => {
       <img src={logo} alt="globe" />
       <div className="form-inputs">
         <i className="fa-solid fa-envelope"></i>
-        <input type="text" placeholder="email..." />
+        <input
+          type="emial"
+          placeholder="email..."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
 
       <div className="form-inputs">
-        <i class="fa-solid fa-lock"></i>
-        <input type="text" placeholder="password..." />
+        <i className="fa-solid fa-lock"></i>
+        <input
+          type="password"
+          placeholder="password..."
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
-      <button>Login</button>
+      <button type="submit">Login</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
       <p>
         Don't have an account? <a href="/signup">Signup</a>
       </p>

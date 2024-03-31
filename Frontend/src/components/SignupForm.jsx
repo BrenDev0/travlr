@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import logo from "../images/earth.jpg";
+import { useGlobalContext } from "../contex/GlobalContex";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignupForm = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifypassword, setVerifyPassword] = useState("");
+  const [error, setError] = useState(null);
+  const { access } = useGlobalContext();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const form = { name, email, password };
+      const success = await axios.post(
+        "http://localhost:5000/api/auth/signup",
+        form,
+        { withCredentials: true }
+      );
+      if (success) {
+        await access();
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.response.data.message);
+    }
+  };
+
   return (
-    <FormStyled onSubmit={(e) => e.preventDefault()}>
+    <FormStyled onSubmit={handleSubmit}>
       <div className="logo">
         <h1>travlr</h1>
         <span>Embark on an adventure</span>
@@ -12,18 +42,37 @@ const SignupForm = () => {
       <img src={logo} alt="globe" />
       <div className="form-inputs">
         <i className="fa-solid fa-user"></i>
-        <input type="text" required placeholder="name..." />
+        <input
+          type="text"
+          required
+          placeholder="name..."
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </div>
       <div className="form-inputs">
         <i className="fa-solid fa-envelope"></i>
-        <input type="text" required placeholder="email..." />
+        <input
+          type="email"
+          required
+          placeholder="email..."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
 
       <div className="form-inputs">
-        <i class="fa-solid fa-lock"></i>
-        <input type="text" required placeholder="password..." />
+        <i className="fa-solid fa-lock"></i>
+        <input
+          type="password"
+          required
+          placeholder="password..."
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
       </div>
-      <button>Signup</button>
+      <button type="submit">Signup</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <p>
         Already have an account? <a href="/login">Login</a>
       </p>

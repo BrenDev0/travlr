@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import axios from "axios";
+import { useGlobalContext } from "../contex/GlobalContex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { access, loggedin } = useGlobalContext();
   const navigate = useNavigate();
-  const [cookies, removeCookie] = useCookies();
-  const [userName, setUsername] = useState("");
-  useEffect(() => {
-    const verifyCookie = async () => {
-      if (!cookies.token) {
-        navigate("/login");
-      }
-      const { data } = await axios.post(
-        "http://localhost:5000/api/auth",
-        {},
-        { withCredentials: true }
-      );
-      const { status, user } = data;
-      setUsername(user);
-      return status;
-    };
-    verifyCookie();
-  }, [cookies, navigate, removeCookie]);
 
-  return <div>home</div>;
+  useEffect(() => {
+    console.log("home useEffect");
+    if (!loggedin) {
+      navigate("/login");
+    }
+  }, [loggedin]);
+
+  const logOut = async () => {
+    await axios.get("http://localhost:5000/api/auth/logout");
+    access();
+  };
+  return (
+    <div>
+      <p>home</p>
+      <button onClick={() => logOut()}>log out</button>
+    </div>
+  );
 };
 
 export default Home;

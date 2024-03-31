@@ -8,63 +8,62 @@ const createToken = (_id) => {
 };
 
 //login user
-const loginUser = async (req, res, next) => {
+const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     // validations
     if (!email || !password) {
-      res.json({ message: "All fields required" });
+      res.status(400).json({ message: "All fields required" });
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.json({ message: "Incorrect email or password" });
+      res.status(401).json({ message: "Incorrect email or password" });
     }
 
     const auth = await bcrypt.compare(password, user.password);
 
     if (!auth) {
-      res.json({ message: "Incorrect email password" });
+      res.status(401).json({ message: "Incorrect email password" });
     }
 
     const token = createToken(user._id);
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
-
-    res.status(201).json({ message: "Log in successful", success: true });
-    next();
+    res
+      .cookie("token", token, {
+        httpOnly: false,
+        withCredentials: true,
+      })
+      .send();
   } catch (error) {
     console.error(error);
   }
 };
 
 //signup user
-const signupUser = async (req, res, next) => {
+const signupUser = async (req, res) => {
   try {
     const { email, password, name } = req.body;
 
     //validations
     if (!email || !name || !password) {
-      return res.json({ message: "All fields required" });
+      return res.status(400).json({ message: "All fields required" });
     }
 
     if (!validator.isEmail(email)) {
-      return res.json({ message: "Enter a valid email" });
+      return res.status(400).json({ message: "Enter a valid email" });
     }
 
     if (!validator.isStrongPassword(password)) {
-      res.json({ message: "Choose a stronger password" });
+      res.status(400).json({ message: "Choose a stronger password" });
     }
 
     // check if user already exists
     const exists = await User.findOne({ email });
 
     if (exists) {
-      return res.json({ message: "Email already in use" });
+      return res.status(400).json({ message: "Email already in use" });
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -77,19 +76,41 @@ const signupUser = async (req, res, next) => {
 
     const token = createToken(user._id);
 
-    res.cookie("token", token, {
-      withCredentials: true,
-      httpOnly: false,
-    });
-
     res
-      .status(201)
-      .json({ message: "New user registered", success: true, user });
-
-    next();
+      .cookie("token", token, {
+        withCredentials: true,
+        httpOnly: false,
+      })
+      .send();
   } catch (error) {
     console.error(error);
   }
 };
 
-module.exports = { loginUser, signupUser };
+//log out
+const logOut = (req, res) => {
+  res
+    .cookie("token", "", {
+      httpOnly: false,
+      expires: new Date(0),
+    })
+    .send();
+};
+
+//allow access
+const allowAccess = (req, res) => {
+  try {
+    const token = req.cookies.token;
+
+    if (!token) {
+      return res.json(false);
+    }
+    //verify token
+    jwt.verify(token, process.env.SECRET);
+
+    res.send(true);
+  } catch (error) {
+    res.json(false);
+  }
+};
+module.exports = { loginUser, signupUser, logOut, allowAccess };

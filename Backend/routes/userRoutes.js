@@ -1,6 +1,10 @@
 const router = require("express").Router();
-const { loginUser, signupUser } = require("../controllers/userController");
-const userVerification = require("../middlewares.js/userVerification");
+const {
+  loginUser,
+  signupUser,
+  logOut,
+  allowAccess,
+} = require("../controllers/userController");
 
 //log in
 router.post("/login", loginUser);
@@ -8,6 +12,9 @@ router.post("/login", loginUser);
 //sign in
 router.post("/signup", signupUser);
 
-router.post("/", userVerification);
+//verfication
+router.get("/", allowAccess);
+//logout
+router.get("/logout", logOut);
 
 module.exports = router;
