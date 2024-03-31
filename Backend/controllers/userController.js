@@ -48,11 +48,11 @@ const signupUser = async (req, res) => {
 
     //validations
     if (!email || !name || !password) {
-      return res.status(400).json({ message: "All fields required" });
+      res.status(400).json({ message: "All fields required" });
     }
 
     if (!validator.isEmail(email)) {
-      return res.status(400).json({ message: "Enter a valid email" });
+      res.status(400).json({ message: "Enter a valid email" });
     }
 
     if (!validator.isStrongPassword(password)) {
