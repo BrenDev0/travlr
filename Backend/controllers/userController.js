@@ -14,19 +14,19 @@ const loginUser = async (req, res) => {
 
     // validations
     if (!email || !password) {
-      res.status(400).json({ message: "All fields required" });
+      return res.status(400).json({ message: "All fields required" });
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(401).json({ message: "Incorrect email or password" });
+      return res.status(401).json({ message: "Incorrect email or password" });
     }
 
     const auth = await bcrypt.compare(password, user.password);
 
     if (!auth) {
-      res.status(401).json({ message: "Incorrect email password" });
+      return res.status(401).json({ message: "Incorrect email password" });
     }
 
     const token = createToken(user._id);
@@ -48,15 +48,15 @@ const signupUser = async (req, res) => {
 
     //validations
     if (!email || !name || !password) {
-      res.status(400).json({ message: "All fields required" });
+      return res.status(400).json({ message: "All fields required" });
     }
 
     if (!validator.isEmail(email)) {
-      res.status(400).json({ message: "Enter a valid email" });
+      return res.status(400).json({ message: "Enter a valid email" });
     }
 
     if (!validator.isStrongPassword(password)) {
-      res.status(400).json({ message: "Choose a stronger password" });
+      return res.status(400).json({ message: "Choose a stronger password" });
     }
 
     // check if user already exists

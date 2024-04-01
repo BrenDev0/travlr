@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
 import background from "../images/background.webp";
+import { useGlobalContext } from "../contex/GlobalContex";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const { access, loggedin } = useGlobalContext();
+  const navigate = useNavigate();
+
   return (
     <LoginStyled>
       <LoginForm />

@@ -5,7 +5,7 @@ import axios from "axios";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
-  const [loggedin, setLoggedin] = useState(undefined);
+  const [loggedin, setLoggedin] = useState(false);
 
   const access = async () => {
     const auth = await axios.get("http://localhost:5000/api/auth");

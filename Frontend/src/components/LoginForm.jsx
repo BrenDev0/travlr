@@ -26,7 +26,7 @@ const LoginForm = () => {
         navigate("/");
       }
     } catch (error) {
-      setError(error.response.data.messgae);
+      setError(error.response.data.message);
     }
   };
 
@@ -120,6 +120,11 @@ const FormStyled = styled.form`
     cursor: pointer;
     border: none;
     border-radius: 10px;
+  }
+
+  button:active {
+    transform: scale(1.2);
+    transition: ease-in-out 0.2s;
   }
   a {
     text-decoration: none;
