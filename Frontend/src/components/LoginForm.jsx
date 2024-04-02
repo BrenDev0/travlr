@@ -6,7 +6,7 @@ import axios from "axios";
 import { useGlobalContext } from "../contex/GlobalContex";
 
 const LoginForm = () => {
-  const { access } = useGlobalContext();
+  const { verifyCookies } = useGlobalContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -22,10 +22,13 @@ const LoginForm = () => {
         { withCredentials: true }
       );
       if (success) {
-        await access();
-        navigate("/");
+        const verified = await axios.get("http://localhost:5000/api/auth");
+
+        verified.data.status ? navigate("/") : navigate("/login"),
+          setError(verified.data.message);
       }
     } catch (error) {
+      console.log(error);
       setError(error.response.data.message);
     }
   };

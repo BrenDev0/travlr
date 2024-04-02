@@ -5,13 +5,20 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Home = () => {
-  const { access, loggedin } = useGlobalContext();
+  const {} = useGlobalContext();
   const navigate = useNavigate();
 
-  const logOut = async () => {
-    await axios.get("http://localhost:5000/api/auth/logout");
-    access();
-  };
+  useEffect(() => {
+    const verifyAccess = async () => {
+      const res = await axios.get("http://localhost:5000/api/auth");
+
+      if (!res.data.status) {
+        navigate("/login");
+      }
+    };
+    verifyAccess();
+  }, []);
+
   return (
     <div>
       <Navbar />

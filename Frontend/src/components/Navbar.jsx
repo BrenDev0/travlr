@@ -1,7 +1,15 @@
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    await axios.get("http://localhost:5000/api/auth/logout");
+    navigate("/login");
+  };
+
   return (
     <NavbarStyled>
       <ul>
@@ -15,7 +23,7 @@ const Navbar = () => {
           <a href="/">Options</a>
         </li>
         <li>
-          <a href="/">LogOut</a>
+          <button onClick={handleLogout}>LogOut</button>
         </li>
       </ul>
     </NavbarStyled>

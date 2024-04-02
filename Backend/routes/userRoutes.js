@@ -12,9 +12,9 @@ router.post("/login", loginUser);
 //sign in
 router.post("/signup", signupUser);
 
-//verfication
-router.get("/", allowAccess);
 //logout
 router.get("/logout", logOut);
+
+router.get("/", allowAccess);
 
 module.exports = router;

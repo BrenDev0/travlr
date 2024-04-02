@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1h" });
+  return jwt.sign({ _id }, process.env.ACCESS_SECRET);
 };
 
 //login user
@@ -29,13 +29,18 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: "Incorrect email password" });
     }
 
+    //access token
+
     const token = createToken(user._id);
     res
       .cookie("token", token, {
-        httpOnly: false,
-        withCredentials: true,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 2 * 60 * 60 * 1000,
       })
-      .send();
+      .status(201)
+      .json({ message: "Log in successful" });
   } catch (error) {
     console.error(error);
   }
@@ -78,8 +83,10 @@ const signupUser = async (req, res) => {
 
     res
       .cookie("token", token, {
-        withCredentials: true,
-        httpOnly: false,
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+        maxAge: 2 * 60 * 60 * 1000,
       })
       .send();
   } catch (error) {
@@ -89,28 +96,37 @@ const signupUser = async (req, res) => {
 
 //log out
 const logOut = (req, res) => {
-  res
-    .cookie("token", "", {
-      httpOnly: false,
-      expires: new Date(0),
-    })
-    .send();
+  const cookies = req.cookies;
+
+  if (!cookies?.token) {
+    return res.sendStatus(204);
+  }
+
+  res.clearCookie("token", { httpOnly: true, sameSite: "None", secure: true });
+
+  res.json({ message: "Cookie cleared" });
 };
 
-//allow access
-const allowAccess = (req, res) => {
+const allowAccess = async (req, res) => {
   try {
     const token = req.cookies.token;
-
     if (!token) {
-      return res.json(false);
+      return res.json({ status: false, message: "Unauthorized" });
     }
-    //verify token
-    jwt.verify(token, process.env.SECRET);
 
-    res.send(true);
-  } catch (error) {
-    res.json(false);
-  }
+    jwt.verify(token, process.env.ACCESS_SECRET, async (err, data) => {
+      if (err) {
+        return res.json({ status: false, message: "Unauthorized" });
+      } else {
+        const user = await User.findById(data._id);
+        if (user) {
+          return res.status(201).json({ status: true, user: data._id });
+        } else {
+          return res.json({ status: false, message: "Unauthorized" });
+        }
+      }
+    });
+  } catch (error) {}
 };
+
 module.exports = { loginUser, signupUser, logOut, allowAccess };

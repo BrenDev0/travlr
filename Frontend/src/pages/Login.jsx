@@ -6,7 +6,6 @@ import { useGlobalContext } from "../contex/GlobalContex";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { access, loggedin } = useGlobalContext();
   const navigate = useNavigate();
 
   return (

@@ -1,26 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 import axios from "axios";
 
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
-  const [loggedin, setLoggedin] = useState(false);
-
-  const access = async () => {
-    const auth = await axios.get("http://localhost:5000/api/auth");
-    setLoggedin(auth.data);
-  };
-
-  useEffect(() => {
-    access();
-  }, []);
-
-  return (
-    <GlobalContext.Provider value={{ loggedin, access }}>
-      {children}
-    </GlobalContext.Provider>
-  );
+  return <GlobalContext.Provider value={{}}>{children}</GlobalContext.Provider>;
 };
 
 export const useGlobalContext = () => {
