@@ -88,7 +88,8 @@ const signupUser = async (req, res) => {
         sameSite: "None",
         maxAge: 2 * 60 * 60 * 1000,
       })
-      .send();
+      .status(201)
+      .json({ message: "New user successfully created" });
   } catch (error) {
     console.error(error);
   }
@@ -126,7 +127,9 @@ const allowAccess = async (req, res) => {
         }
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 module.exports = { loginUser, signupUser, logOut, allowAccess };
