@@ -3,6 +3,8 @@ import { useGlobalContext } from "../contex/GlobalContex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import styled from "styled-components";
+import Map from "../components/Map";
 
 const Home = () => {
   const {} = useGlobalContext();
@@ -20,10 +22,15 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <Navbar />
-    </div>
+    <HomeStyled>
+      <Map />
+    </HomeStyled>
   );
 };
+
+const HomeStyled = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export default Home;

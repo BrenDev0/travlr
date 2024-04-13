@@ -12,6 +12,7 @@ const Navbar = () => {
 
   return (
     <NavbarStyled>
+      <h1>Travlr</h1>
       <ul>
         <li>
           <a href="/">Home</a>
