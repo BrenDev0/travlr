@@ -108,22 +108,26 @@ const logOut = (req, res) => {
   res.json({ message: "Cookie cleared" });
 };
 
-const allowAccess = async (req, res) => {
+const verifyAuth = async (req, res) => {
   try {
     const token = req.cookies.token;
+
     if (!token) {
-      return res.json({ status: false, message: "Unauthorized" });
+      return res.json({
+        status: false,
+        message: "Unauthorized no token",
+      });
     }
 
-    jwt.verify(token, process.env.ACCESS_SECRET, async (err, data) => {
+    jwt.verify(token, process.env.SECRET, async (err, data) => {
       if (err) {
-        return res.json({ status: false, message: "Unauthorized" });
+        return res.json({ status: false, message: "Unauthorized err" });
       } else {
         const user = await User.findById(data._id);
         if (user) {
-          return res.status(201).json({ status: true, user: data._id });
+          return res.json({ status: true, user: user._id, token: token });
         } else {
-          return res.json({ status: false, message: "Unauthorized" });
+          return res.json({ status: false, message: "Unauthorized no user" });
         }
       }
     });
@@ -132,4 +136,4 @@ const allowAccess = async (req, res) => {
   }
 };
 
-module.exports = { loginUser, signupUser, logOut, allowAccess };
+module.exports = { loginUser, signupUser, logOut, verifyAuth };

@@ -1,21 +1,22 @@
-const User = require("../models/userModel");
+const User = require("../models/userSchema");
 const jwt = require("jsonwebtoken");
 
-const auth = (req, res, next) => {
-  try {
-    const token = req.cookies.token;
+//allow access
 
-    if (!token) {
-      return res.status(401).json({ messgae: "Unauthorized access" });
-    }
-    //verify token
-    const verified = jwt.verify(token, process.env.SECRET);
+const verifyUser = async (req, res, next) => {
+  const authHeader = req.headers.authorization || req.headers.Authorization;
 
-    req.user = verified.user;
-    next();
-  } catch (error) {
-    res.status(401).json({ message: "Unauthorized access" });
+  if (!authHeader?.startsWith("Bearer ")) {
+    return res.status(401).json({ message: "Unauthorized" });
   }
+  const token = authHeader.split(" ")[1];
+
+  jwt.verify(token, process.env.SECRET, (err, decoded) => {
+    if (err) return res.status(403).json({ message: err });
+    req.user = decoded._id;
+
+    next();
+  });
 };
 
-module.exports = auth;
+module.exports = verifyUser;
