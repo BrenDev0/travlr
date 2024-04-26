@@ -5,26 +5,25 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import styled from "styled-components";
 import Map from "../components/Map";
+import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 
 const Home = () => {
-  const {} = useGlobalContext();
+  const { getUser, user, isLoading } = useGlobalContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const verifyAccess = async () => {
-      const res = await axios.get("http://localhost:5000/api/auth");
+    getUser();
+    if (user) {
+      !user.status && navigate("/login");
+    }
+  }, [user]);
 
-      if (!res.data.status) {
-        navigate("/login");
-      }
-    };
-    verifyAccess();
-  }, []);
-
-  return (
+  return !isLoading ? (
     <HomeStyled>
       <Map />
     </HomeStyled>
+  ) : (
+    <span>Loading</span>
   );
 };
 

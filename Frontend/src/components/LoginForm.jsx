@@ -22,10 +22,7 @@ const LoginForm = () => {
         { withCredentials: true }
       );
       if (success) {
-        const verified = await axios.get("http://localhost:5000/api/auth");
-
-        verified.data.status ? navigate("/") : navigate("/login"),
-          setError(verified.data.message);
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

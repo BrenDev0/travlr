@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.ACCESS_SECRET);
+  return jwt.sign({ _id }, process.env.SECRET);
 };
 
 //login user
@@ -121,7 +121,7 @@ const verifyAuth = async (req, res) => {
 
     jwt.verify(token, process.env.SECRET, async (err, data) => {
       if (err) {
-        return res.json({ status: false, message: "Unauthorized err" });
+        return res.json({ status: false, message: "Unauthorized", err });
       } else {
         const user = await User.findById(data._id);
         if (user) {
