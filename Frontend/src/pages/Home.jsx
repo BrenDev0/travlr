@@ -23,7 +23,7 @@ const Home = () => {
       <Map />
     </HomeStyled>
   ) : (
-    <span>Loading</span>
+    <HomeSkeleton />
   );
 };
 
