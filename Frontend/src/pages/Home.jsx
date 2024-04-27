@@ -8,18 +8,18 @@ import Map from "../components/Map";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 
 const Home = () => {
-  const { getUser, user, isLoading } = useGlobalContext();
+  const { getUser, user, isLoading, setIsLoading } = useGlobalContext();
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUser();
-    if (user) {
-      !user.status && navigate("/login");
-    }
+    setTimeout(() => {
+      user.status ? setIsLoading(false) : navigate("/login");
+    }, 2000);
   }, [user]);
 
   return !isLoading ? (
     <HomeStyled>
+      <Navbar />
       <Map />
     </HomeStyled>
   ) : (

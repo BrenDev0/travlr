@@ -7,7 +7,10 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-
+  const { user } = useGlobalContext();
+  useEffect(() => {
+    user.status ? navigate("/") : null;
+  });
   return (
     <LoginStyled>
       <LoginForm />

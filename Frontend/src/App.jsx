@@ -1,11 +1,13 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import axios from "axios";
+import { useGlobalContext } from "./contex/GlobalContex";
 
 axios.defaults.withCredentials = true;
 function App() {
+  const { user } = useGlobalContext();
   return (
     <BrowserRouter>
       <Routes>

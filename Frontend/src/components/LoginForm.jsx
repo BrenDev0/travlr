@@ -6,7 +6,7 @@ import axios from "axios";
 import { useGlobalContext } from "../contex/GlobalContex";
 
 const LoginForm = () => {
-  const { verifyCookies } = useGlobalContext();
+  const { getUser } = useGlobalContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -16,14 +16,12 @@ const LoginForm = () => {
     try {
       e.preventDefault();
       const form = { email, password };
-      const success = await axios.post(
-        "http://localhost:5000/api/auth/login",
-        form,
-        { withCredentials: true }
-      );
-      if (success) {
-        navigate("/");
-      }
+      await axios.post("http://localhost:5000/api/auth/login", form, {
+        withCredentials: true,
+      });
+      await getUser();
+
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError(error.response.data.message);

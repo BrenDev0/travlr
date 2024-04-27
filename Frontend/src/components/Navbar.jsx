@@ -2,11 +2,14 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useGlobalContext } from "../contex/GlobalContex";
 
 const Navbar = () => {
+  const { setUser } = useGlobalContext();
   const navigate = useNavigate();
   const handleLogout = async () => {
     await axios.get("http://localhost:5000/api/auth/logout");
+    setUser({ status: false });
     navigate("/login");
   };
 
