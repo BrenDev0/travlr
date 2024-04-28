@@ -6,7 +6,7 @@ import axios from "axios";
 import { useGlobalContext } from "../contex/GlobalContex";
 
 const LoginForm = () => {
-  const { getUser } = useGlobalContext();
+  const { getUser, setIsLoading } = useGlobalContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const LoginForm = () => {
         withCredentials: true,
       });
       await getUser();
-
+      setIsLoading(true);
       navigate("/");
     } catch (error) {
       console.log(error);

@@ -7,10 +7,10 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         list-style: none;
         font-family: "Ubuntu", sans-serif;
-         font-weight: 300;
+        font-weight: 300;
         font-style: normal;
-        font-size: 1vw;
         text-decoration: none;
+        ;
         
         
     }
@@ -22,8 +22,11 @@ export const GlobalStyle = createGlobalStyle`
         
     }
 
-    body{
-        width: 100%;
-        height: 100%;
+
+    :root {
+        --dark-purple: rgb(73, 36, 62);
+        --purple: rgb(112, 66, 100);
+        --light-purple: rgb(187, 132, 147);
+        --tan: rgb(219, 175, 160)
     }
 `;

@@ -5,7 +5,7 @@ import SkeletonDiv from "../SkeletonDiv";
 const HomeSkeleton = () => {
   return (
     <HomeSkeletonStyled>
-      <SkeletonDiv width={"20vw"} height={"50vh"} br={"11px"} />
+      <SkeletonDiv width={"100vw"} height={"100vh"} br={"10px"} />
     </HomeSkeletonStyled>
   );
 };

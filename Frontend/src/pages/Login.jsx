@@ -7,9 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user } = useGlobalContext();
+  const { user, setIsLoading } = useGlobalContext();
   useEffect(() => {
-    user.status ? navigate("/") : null;
+    user.status ? navigate("/") : setIsLoading(false);
   });
   return (
     <LoginStyled>

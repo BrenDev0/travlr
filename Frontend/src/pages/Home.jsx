@@ -12,9 +12,11 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      user.status ? setIsLoading(false) : navigate("/login");
-    }, 2000);
+    !user.status
+      ? navigate("/login")
+      : setTimeout(() => {
+          setIsLoading(false);
+        }, 2000);
   }, [user]);
 
   return !isLoading ? (

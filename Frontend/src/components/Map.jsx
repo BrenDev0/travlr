@@ -20,6 +20,7 @@ const MapStyled = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
+  z-index: 0;
 
   .leaflet-container {
     width: 100%;
