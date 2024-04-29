@@ -6,7 +6,7 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const AUTH_URL = "http://localhost:5000/api/auth";
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({ status: false });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     getUser();
@@ -14,7 +14,8 @@ export const GlobalProvider = ({ children }) => {
 
   const getUser = async () => {
     const user = await axios.get(AUTH_URL);
-    user.status ? setUser(user.data) : null;
+
+    setUser(user.data.status);
   };
   return (
     <GlobalContext.Provider

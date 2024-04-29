@@ -12,20 +12,27 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    !user.status
-      ? navigate("/login")
-      : setTimeout(() => {
-          setIsLoading(false);
-        }, 2000);
+    getUser();
+    setTimeout(() => {
+      if (user === null) {
+        return null;
+      }
+      if (user) {
+        return setIsLoading(false);
+      }
+      if (!user) {
+        return navigate("/login");
+      }
+    }, 2000);
   }, [user]);
 
-  return !isLoading ? (
+  return isLoading ? (
+    <HomeSkeleton />
+  ) : (
     <HomeStyled>
       <Navbar />
       <Map />
     </HomeStyled>
-  ) : (
-    <HomeSkeleton />
   );
 };
 

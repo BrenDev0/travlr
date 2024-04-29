@@ -20,7 +20,6 @@ const LoginForm = () => {
         withCredentials: true,
       });
       await getUser();
-      setIsLoading(true);
       navigate("/");
     } catch (error) {
       console.log(error);

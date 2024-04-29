@@ -10,7 +10,7 @@ const SkeletonDiv = ({ width, height, br }) => {
 };
 
 const SkeletonStyled = styled.div`
-  animation: skeleton-loading 1.5s linear infinite alternate;
+  animation: skeleton-loading 1s linear infinite alternate;
   @keyframes skeleton-loading {
     0% {
       background-color: hsl(200, 20%, 70%);

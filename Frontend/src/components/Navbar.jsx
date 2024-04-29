@@ -9,14 +9,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     await axios.get("http://localhost:5000/api/auth/logout");
-    setUser({ status: false });
+    setUser(false);
     navigate("/login");
   };
 
   return (
     <NavbarStyled>
       <h1>Travlr</h1>
-      <i class="fa-solid fa-bars"></i>
+      <i className="fa-solid fa-bars"></i>
       <ul className="nav">
         <li className="nav-links">
           <a href="/">Home</a>
@@ -25,14 +25,14 @@ const Navbar = () => {
           <a href="/">Map</a>
         </li>
         <li className="nav-links">
-          <a href="/">Trips</a>
+          <a href="/trips">Trips</a>
         </li>
         <li className="nav-links">
           <a href="/">Options</a>
         </li>
         <li>
           <i
-            class="fa-solid fa-arrow-right-from-bracket"
+            className="fa-solid fa-arrow-right-from-bracket"
             onClick={handleLogout}
           ></i>
         </li>

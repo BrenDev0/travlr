@@ -4,14 +4,27 @@ import LoginForm from "../components/LoginForm";
 import background from "../images/background.webp";
 import { useGlobalContext } from "../contex/GlobalContex";
 import { useNavigate } from "react-router-dom";
+import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, setIsLoading } = useGlobalContext();
+  const { user, isLoading, setIsLoading } = useGlobalContext();
   useEffect(() => {
-    user.status ? navigate("/") : setIsLoading(false);
-  });
-  return (
+    setTimeout(() => {
+      if (user === null) {
+        return null;
+      }
+      if (user) {
+        navigate("/");
+      }
+      if (!user) {
+        setIsLoading(false);
+      }
+    }, 2000);
+  }, [user]);
+  return isLoading ? (
+    <HomeSkeleton />
+  ) : (
     <LoginStyled>
       <LoginForm />
     </LoginStyled>
