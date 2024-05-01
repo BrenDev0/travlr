@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../contex/GlobalContex";
@@ -13,11 +13,24 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const showMenu = () => {
+    const nav = document.getElementsByClassName("nav");
+    nav[0].style.right = "0";
+  };
+
+  const hideMenu = () => {
+    const nav = document.getElementsByClassName("nav");
+    nav[0].style.right = "-200px";
+  };
+
   return (
     <NavbarStyled>
       <h1>Travlr</h1>
-      <i className="fa-solid fa-bars"></i>
+
+      <i className="fa-solid fa-bars" onClick={() => showMenu()}></i>
+
       <ul className="nav">
+        <i className="fa-solid fa-xmark" onClick={() => hideMenu()}></i>
         <li className="nav-links">
           <a href="/">Home</a>
         </li>
@@ -42,19 +55,15 @@ const Navbar = () => {
 };
 
 const NavbarStyled = styled.nav`
-  opacity: 0.85;
-  position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  top: 2%;
-  right: 2%;
-  width: 75%;
-  height: 5%;
-  z-index: 1;
+  width: 100%;
+  height: 10%;
   font-size: 1rem;
-
-  color: var(--tan);
+  overflow: hidden;
+  color: var(--red);
+  padding: 10px;
 
   .nav {
     width: 50%;
@@ -65,7 +74,7 @@ const NavbarStyled = styled.nav`
   }
 
   .fa-solid {
-    color: var(--dark-purple);
+    color: var(--red);
     font-size: 2rem;
     transition: 0.5s;
   }
@@ -76,9 +85,7 @@ const NavbarStyled = styled.nav`
   }
 
   .nav-links {
-    background: var(--dark-purple);
     width: 20%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,14 +93,14 @@ const NavbarStyled = styled.nav`
   }
 
   .nav-links a {
-    color: var(--tan);
+    color: var(--black);
     width: 100%;
 
     text-align: center;
   }
   h1 {
     font-family: "Shadows Into Light", cursive;
-    color: var(--purple);
+    color: var(--red);
     font-size: 3rem;
   }
 
@@ -101,13 +108,38 @@ const NavbarStyled = styled.nav`
     display: none;
   }
 
+  .fa-xmark {
+    display: none;
+  }
+
   @media (max-width: 1024px) {
     .nav {
-      display: none;
+      position: absolute;
+      background: #f44336;
+      height: 100%;
+      width: 200px;
+      text-align: left;
+      top: 0;
+      right: -200px;
+      z-index: 1;
+      transition: 1s;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-evenly;
+    }
+
+    .nav-links {
+      margin-left: 10px;
+
+      background: transparent;
     }
 
     .fa-bars {
       display: inline;
+    }
+    .fa-xmark {
+      display: inline;
+      margin-left: 10px;
     }
   }
 `;

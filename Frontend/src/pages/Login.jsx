@@ -10,17 +10,15 @@ const Login = () => {
   const navigate = useNavigate();
   const { user, isLoading, setIsLoading } = useGlobalContext();
   useEffect(() => {
-    setTimeout(() => {
-      if (user === null) {
-        return null;
-      }
-      if (user) {
-        navigate("/");
-      }
-      if (!user) {
-        setIsLoading(false);
-      }
-    }, 2000);
+    if (user === null) {
+      return null;
+    }
+    if (user) {
+      navigate("/");
+    }
+    if (!user) {
+      setIsLoading(false);
+    }
   }, [user]);
   return isLoading ? (
     <HomeSkeleton />

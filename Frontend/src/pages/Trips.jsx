@@ -28,18 +28,23 @@ const Trips = () => {
   ) : (
     <TripsStyled>
       <Navbar />
-      <form action="">
-        <label htmlFor="title">Title</label>
-        <input type="text" required id="title" />
-        <label htmlFor="destination">Destination</label>
-        <input type="text" required id="destination" />
-      </form>
     </TripsStyled>
   );
 };
 
 const TripsStyled = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: var(--white);
+
+  form {
+    border: 2px solid var(--red);
+    border-radius: 10px;
+    padding: 15px;
+    height: 75%;
+  }
 `;
 
 export default Trips;

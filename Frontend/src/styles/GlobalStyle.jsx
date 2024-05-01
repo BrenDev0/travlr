@@ -15,18 +15,23 @@ export const GlobalStyle = createGlobalStyle`
         
     }
 
+
+   
+    
+
     #root{
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+       
+       
         
     }
 
 
     :root {
-        --dark-purple: rgb(73, 36, 62);
-        --purple: rgb(112, 66, 100);
-        --light-purple: rgb(187, 132, 147);
-        --tan: rgb(219, 175, 160)
+        --black: rgb(31, 23, 23);
+        --red: rgb(206, 90, 103);
+        --orange: rgb(244, 191, 150);
+        --white: rgb(252, 245, 237)
     }
 `;
