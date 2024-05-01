@@ -13,24 +13,48 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const showMenu = () => {
-    const nav = document.getElementsByClassName("nav");
-    nav[0].style.right = "0";
+  const showSideNav = () => {
+    const sideBar = document.getElementsByClassName("side-bar");
+    const hamburger = document.getElementById("hamburger");
+    sideBar[0].style.display = "flex";
+    hamburger.style.display = "none";
   };
 
-  const hideMenu = () => {
-    const nav = document.getElementsByClassName("nav");
-    nav[0].style.right = "-200px";
+  const hideSideNav = () => {
+    const sideBar = document.getElementsByClassName("side-bar");
+    const hamburger = document.getElementById("hamburger");
+    sideBar[0].style.display = "none";
+    hamburger.style.display = "block";
   };
 
   return (
     <NavbarStyled>
       <h1>Travlr</h1>
 
-      <i className="fa-solid fa-bars" onClick={() => showMenu()}></i>
+      <i className="fa-solid fa-bars" id="hamburger" onClick={showSideNav}></i>
 
       <ul className="nav">
-        <i className="fa-solid fa-xmark" onClick={() => hideMenu()}></i>
+        <li className="nav-links">
+          <a href="/">Home</a>
+        </li>
+        <li className="nav-links">
+          <a href="/">Map</a>
+        </li>
+        <li className="nav-links">
+          <a href="/trips">Trips</a>
+        </li>
+        <li className="nav-links">
+          <a href="/">Options</a>
+        </li>
+        <li>
+          <i
+            className="fa-solid fa-arrow-right-from-bracket"
+            onClick={handleLogout}
+          ></i>
+        </li>
+      </ul>
+      <ul className="side-bar">
+        <i className="fa-solid fa-xmark" onClick={hideSideNav}></i>
         <li className="nav-links">
           <a href="/">Home</a>
         </li>
@@ -73,10 +97,42 @@ const NavbarStyled = styled.nav`
     align-items: center;
   }
 
+  .side-bar {
+    position: absolute;
+    background: var(--red);
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    border: 1px solid black;
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    animation: sideBar 1.5s;
+  }
+
+  @keyframes sideBar {
+    0% {
+      right: -200px;
+    }
+    100% {
+      right: 0;
+    }
+  }
+
+  .side-bar .nav-links {
+    padding: 20px;
+  }
+
   .fa-solid {
-    color: var(--red);
+    color: var(--black);
     font-size: 2rem;
     transition: 0.5s;
+  }
+  .fa-xmark {
+    color: var(--black);
   }
 
   .fa-solid:hover {
@@ -108,38 +164,12 @@ const NavbarStyled = styled.nav`
     display: none;
   }
 
-  .fa-xmark {
-    display: none;
-  }
-
   @media (max-width: 1024px) {
     .nav {
-      position: absolute;
-      background: #f44336;
-      height: 100%;
-      width: 200px;
-      text-align: left;
-      top: 0;
-      right: -200px;
-      z-index: 1;
-      transition: 1s;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: space-evenly;
+      display: none;
     }
-
-    .nav-links {
-      margin-left: 10px;
-
-      background: transparent;
-    }
-
     .fa-bars {
-      display: inline;
-    }
-    .fa-xmark {
-      display: inline;
-      margin-left: 10px;
+      display: block;
     }
   }
 `;
