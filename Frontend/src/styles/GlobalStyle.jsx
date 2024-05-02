@@ -29,9 +29,9 @@ export const GlobalStyle = createGlobalStyle`
 
 
     :root {
-        --black: rgb(31, 23, 23);
-        --red: rgb(206, 90, 103);
-        --orange: rgb(244, 191, 150);
-        --white: rgb(252, 245, 237)
+        --red: rgb(250, 112, 112);
+        --white: rgb(254, 253, 237);
+        --light-green: rgb(198, 235, 197);
+        --green: rgb(161, 195, 152)
     }
 `;

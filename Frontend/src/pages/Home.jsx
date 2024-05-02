@@ -39,6 +39,7 @@ const Home = () => {
 const HomeStyled = styled.div`
   width: 100%;
   height: 100%;
+  background: var(--white);
 `;
 
 export default Home;

@@ -15,16 +15,14 @@ const Navbar = () => {
 
   const showSideNav = () => {
     const sideBar = document.getElementsByClassName("side-bar");
-    const hamburger = document.getElementById("hamburger");
+
     sideBar[0].style.display = "flex";
-    hamburger.style.display = "none";
   };
 
   const hideSideNav = () => {
     const sideBar = document.getElementsByClassName("side-bar");
-    const hamburger = document.getElementById("hamburger");
+
     sideBar[0].style.display = "none";
-    hamburger.style.display = "block";
   };
 
   return (
@@ -88,6 +86,7 @@ const NavbarStyled = styled.nav`
   overflow: hidden;
   color: var(--red);
   padding: 10px;
+  background: var(--white);
 
   .nav {
     width: 50%;
@@ -99,7 +98,7 @@ const NavbarStyled = styled.nav`
 
   .side-bar {
     position: absolute;
-    background: var(--red);
+    background: var(--light-green);
     right: 0;
     top: 0;
     width: 50%;
