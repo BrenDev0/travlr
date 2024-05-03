@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../contex/GlobalContex";
@@ -13,24 +13,24 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const showSideNav = () => {
-    const sideBar = document.getElementsByClassName("side-bar");
+  const sideBar = useRef();
 
-    sideBar[0].style.display = "flex";
+  const showSideNav = () => {
+    sideBar.current.style.display = "flex";
+    sideBar.current.style.right = "0";
   };
 
   const hideSideNav = () => {
-    const sideBar = document.getElementsByClassName("side-bar");
-
-    sideBar[0].style.display = "none";
+    sideBar.current.style.right = "-200px";
+    setTimeout(() => {
+      sideBar.current.style.display = "none";
+    }, 1500);
   };
 
   return (
     <NavbarStyled>
       <h1>Travlr</h1>
-
       <i className="fa-solid fa-bars" id="hamburger" onClick={showSideNav}></i>
-
       <ul className="nav">
         <li className="nav-links">
           <a href="/">Home</a>
@@ -51,7 +51,10 @@ const Navbar = () => {
           ></i>
         </li>
       </ul>
-      <ul className="side-bar">
+
+      {/* -----------------------mobile menu--------------------- */}
+
+      <ul ref={sideBar} className="side-bar">
         <i className="fa-solid fa-xmark" onClick={hideSideNav}></i>
         <li className="nav-links">
           <a href="/">Home</a>
@@ -83,7 +86,6 @@ const NavbarStyled = styled.nav`
   width: 100%;
   height: 10%;
   font-size: 1rem;
-  overflow: hidden;
   color: var(--red);
   padding: 10px;
   background: var(--white);
@@ -109,6 +111,7 @@ const NavbarStyled = styled.nav`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    transition: 1.5s;
     animation: sideBar 1.5s;
   }
 

@@ -2,10 +2,11 @@ import axios from "axios";
 import { useGlobalContext } from "../contex/GlobalContex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+
 import styled from "styled-components";
 import Map from "../components/Map";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
+import Layout from "../styles/Layout";
 
 const Home = () => {
   const { getUser, user, isLoading, setIsLoading } = useGlobalContext();
@@ -29,16 +30,17 @@ const Home = () => {
   return isLoading ? (
     <HomeSkeleton />
   ) : (
-    <HomeStyled>
-      <Navbar />
-      <Map />
-    </HomeStyled>
+    <Layout>
+      <HomeStyled>
+        <Map />
+      </HomeStyled>
+    </Layout>
   );
 };
 
 const HomeStyled = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
   background: var(--white);
 `;
 

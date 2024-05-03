@@ -25,7 +25,7 @@ const DestinationSchema = new mongoose.Schema({
       required: true,
     },
 
-    places: [],
+    places: [PlaceSchema],
   },
 });
 

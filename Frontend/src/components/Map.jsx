@@ -18,7 +18,7 @@ const Map = () => {
 
 const MapStyled = styled.div`
   width: 100%;
-  height: 90%;
+  height: 100%;
   padding: 10px;
   position: relative;
   z-index: 0;

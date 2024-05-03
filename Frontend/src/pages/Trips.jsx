@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import Layout from "../styles/Layout";
+import NewTripForm from "../components/NewTripForm";
 import { useGlobalContext } from "../contex/GlobalContex";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 
@@ -26,19 +27,11 @@ const Trips = () => {
   return isLoading ? (
     <HomeSkeleton />
   ) : (
-    <TripsStyled>
-      <Navbar />
-      <div className="content">
-        <div className="form-con">
-          <form action="">
-            <label htmlFor="title">Title</label>
-            <input type="text" required id="title" />
-            <label htmlFor="destination">Destination</label>
-            <input type="text" id="destination" />
-          </form>
-        </div>
-      </div>
-    </TripsStyled>
+    <Layout>
+      <TripsStyled>
+        <NewTripForm />
+      </TripsStyled>
+    </Layout>
   );
 };
 
@@ -46,7 +39,7 @@ const TripsStyled = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 90%;
   background: var(--white);
 `;
 
