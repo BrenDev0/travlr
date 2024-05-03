@@ -10,6 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 300;
         font-style: normal;
         text-decoration: none;
+        font-size: 1.1rem;
         ;
         
         
