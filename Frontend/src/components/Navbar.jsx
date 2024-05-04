@@ -21,7 +21,7 @@ const Navbar = () => {
   };
 
   const hideSideNav = () => {
-    sideBar.current.style.right = "-200px";
+    sideBar.current.style.right = "-500px";
     setTimeout(() => {
       sideBar.current.style.display = "none";
     }, 1500);
@@ -117,7 +117,7 @@ const NavbarStyled = styled.nav`
 
   @keyframes sideBar {
     0% {
-      right: -200px;
+      right: -500px;
     }
     100% {
       right: 0;
