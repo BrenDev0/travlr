@@ -5,6 +5,7 @@ import Layout from "../styles/Layout";
 import NewTripForm from "../components/NewTripForm";
 import { useGlobalContext } from "../contex/GlobalContex";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
+import Airplane from "../components/Airplane";
 
 const Trips = () => {
   const navigate = useNavigate();
