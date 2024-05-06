@@ -11,7 +11,7 @@ const Airplane = () => {
       } else {
         setStage(stage + 1);
       }
-    }, 5000);
+    }, 3000);
   }, [stage]);
 
   return (
