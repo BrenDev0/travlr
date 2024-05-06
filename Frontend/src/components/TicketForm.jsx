@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { autofillKey } from "../utils/keys";
 
-const NewTripForm = () => {
+const TicketForm = ({ width, height }) => {
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [dropdownTo, setDropdownTo] = useState(false);
   const [dropdownFrom, setDropdownFrom] = useState(false);
+  const style = {
+    width: width,
+    height: height,
+  };
   useEffect(() => {
     destination
       ? fetch(
@@ -48,7 +52,7 @@ const NewTripForm = () => {
       : setDropdownFrom(false);
   }, [depart]);
   return (
-    <FormStyled>
+    <FormStyled style={style}>
       <div className="main-con ticket">
         <div className="stripe">
           <i className="fa-solid fa-plane"></i>
@@ -120,18 +124,24 @@ const NewTripForm = () => {
       </div>
       <div className="stub-con ticket">
         <div className="stripe"></div>
-        <form id="stub"></form>
+        <form id="stub">
+          <label htmlFor="passengers">Passengers:</label>
+          <input type="text" />
+        </form>
       </div>
     </FormStyled>
   );
 };
 
 const FormStyled = styled.div`
-  width: 65%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
   display: flex;
 
+  .fa-plane {
+    color: var(--orange);
+  }
   .ticket {
     border: 2px solid gray;
     border-radius: 10px;
@@ -175,6 +185,7 @@ const FormStyled = styled.div`
 
   #stub {
     height: 85%;
+    padding: 15px;
   }
 
   input {
@@ -182,6 +193,7 @@ const FormStyled = styled.div`
     border-radius: 7px;
     font-size: 1rem;
     border: none;
+    background: var(--gray);
   }
 
   input:focus {
@@ -224,4 +236,4 @@ const FormStyled = styled.div`
     height: 35%;
   }
 `;
-export default NewTripForm;
+export default TicketForm;

@@ -3,8 +3,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Home from "./pages/Home";
 import axios from "axios";
-
-import Trips from "./pages/Trips";
+import RegisterTrip from "./pages/RegisterTrip";
 
 axios.defaults.withCredentials = true;
 function App() {
@@ -14,7 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/trips" element={<Trips />} />
+        <Route path="/trips/Register" element={<RegisterTrip />} />
       </Routes>
     </BrowserRouter>
   );

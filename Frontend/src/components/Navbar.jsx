@@ -1,10 +1,11 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useGlobalContext } from "../contex/GlobalContex";
 
 const Navbar = () => {
+  const [tripsDropDown, setTripsDropDown] = useState(false);
   const { setUser } = useGlobalContext();
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -38,9 +39,29 @@ const Navbar = () => {
         <li className="nav-links">
           <a href="/">Map</a>
         </li>
-        <li className="nav-links">
-          <a href="/trips">Trips</a>
+        <li
+          className="nav-links"
+          onClick={() =>
+            tripsDropDown ? setTripsDropDown(false) : setTripsDropDown(true)
+          }
+        >
+          Trips
         </li>
+        {tripsDropDown && (
+          <div className="dropdown">
+            <ul>
+              <li>
+                <a href="">Your Trips</a>
+              </li>
+              <li>
+                <a href="/trips/register">Register a new trip</a>
+              </li>
+              <li>
+                <a href="/trips/adventure">Share an adventure</a>
+              </li>
+            </ul>
+          </div>
+        )}
         <li className="nav-links">
           <a href="/">Options</a>
         </li>
@@ -62,9 +83,29 @@ const Navbar = () => {
         <li className="nav-links">
           <a href="/">Map</a>
         </li>
-        <li className="nav-links">
-          <a href="/trips">Trips</a>
+        <li
+          className="nav-links"
+          onClick={() =>
+            tripsDropDown ? setTripsDropDown(false) : setTripsDropDown(true)
+          }
+        >
+          Trips
         </li>
+        {tripsDropDown && (
+          <div className="dropdown">
+            <ul>
+              <li>
+                <a href="">Your Trips</a>
+              </li>
+              <li>
+                <a href="/trips/register">Register a new trip</a>
+              </li>
+              <li>
+                <a href="/trips/adventure">Share an adventure</a>
+              </li>
+            </ul>
+          </div>
+        )}
         <li className="nav-links">
           <a href="/">Options</a>
         </li>
@@ -89,6 +130,48 @@ const NavbarStyled = styled.nav`
   color: var(--red);
   padding: 10px;
   background: var(--gray);
+
+  .dropdown {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 12%;
+    top: 7%;
+    z-index: 2;
+    border-radius: 10px;
+
+    background: var(--orange);
+  }
+
+  .dropdown li {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dropdown a {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dropdown li:first-child {
+    border-radius: 10px 10px 0 0;
+  }
+
+  .dropdown li:last-child {
+    border-radius: 0 0 10px 10px;
+  }
+
+  .dropdown li:hover {
+    background: var(--red);
+  }
+
+  li:hover {
+    cursor: pointer;
+  }
+
+  .dropdown a:hover {
+    color: var(--white);
+  }
 
   .nav {
     width: 50%;
@@ -159,8 +242,6 @@ const NavbarStyled = styled.nav`
   .nav-links a {
     color: var(--black);
     width: 100%;
-
-    text-align: center;
   }
   h1 {
     font-family: "Shadows Into Light", cursive;
@@ -178,6 +259,12 @@ const NavbarStyled = styled.nav`
     }
     .fa-bars {
       display: block;
+    }
+
+    .dropdown {
+      position: relative;
+      top: 0;
+      right: 0;
     }
   }
 `;

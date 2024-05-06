@@ -2,14 +2,16 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../styles/Layout";
-import NewTripForm from "../components/NewTripForm";
+
 import { useGlobalContext } from "../contex/GlobalContex";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
-import Airplane from "../components/Airplane";
 
-const Trips = () => {
+import TicketForm from "../components/TicketForm";
+
+const RegisterTrip = () => {
   const navigate = useNavigate();
   const { setIsLoading, isLoading, user, getUser } = useGlobalContext();
+
   useEffect(() => {
     getUser();
     setTimeout(() => {
@@ -29,14 +31,14 @@ const Trips = () => {
     <HomeSkeleton />
   ) : (
     <Layout>
-      <TripsStyled>
-        <NewTripForm />
-      </TripsStyled>
+      <RegisterStyled>
+        <TicketForm width={"60%"} height={"50%"} />
+      </RegisterStyled>
     </Layout>
   );
 };
 
-const TripsStyled = styled.div`
+const RegisterStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,4 +47,4 @@ const TripsStyled = styled.div`
   background: var(--white);
 `;
 
-export default Trips;
+export default RegisterTrip;
