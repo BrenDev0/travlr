@@ -88,7 +88,7 @@ const NavbarStyled = styled.nav`
   font-size: 1rem;
   color: var(--red);
   padding: 10px;
-  background: var(--white);
+  background: var(--gray);
 
   .nav {
     width: 50%;
@@ -100,7 +100,7 @@ const NavbarStyled = styled.nav`
 
   .side-bar {
     position: absolute;
-    background: var(--light-green);
+    background: var(--orange);
     right: 0;
     top: 0;
     width: 50%;
@@ -129,12 +129,9 @@ const NavbarStyled = styled.nav`
   }
 
   .fa-solid {
-    color: var(--black);
+    color: var(--red);
     font-size: 2rem;
     transition: 0.5s;
-  }
-  .fa-xmark {
-    color: var(--black);
   }
 
   .fa-solid:hover {
@@ -142,12 +139,21 @@ const NavbarStyled = styled.nav`
     transform: scale(1.1);
   }
 
+  .side-bar .nav-links:hover {
+    background: var(--red);
+  }
   .nav-links {
     width: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 7px;
+  }
+
+  .side-bar .nav-links {
+    width: 100%;
+    justify-content: left;
+    align-items: flex-start;
   }
 
   .nav-links a {

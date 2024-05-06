@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
         font-style: normal;
         text-decoration: none;
         font-size: 1.1rem;
+        color: var(--black);
         ;
         
         
@@ -34,9 +35,11 @@ export const GlobalStyle = createGlobalStyle`
 
 
     :root {
-        --red: rgb(250, 112, 112);
-        --white: rgb(254, 253, 237);
-        --light-green: rgb(198, 235, 197);
-        --green: rgb(161, 195, 152)
+        --red: #ca1f3d;
+        --orange: #ffbe00;
+        --white: #ffffff;
+        --gray: #f7f0f0;
+        --black: #25182e;
+    
     }
 `;

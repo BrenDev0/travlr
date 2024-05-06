@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { autofillKey } from "../utils/keys";
 
 const NewTripForm = () => {
+  const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [searchData, setSearchData] = useState([]);
-  const [dropdown, setDropdown] = useState(false);
+  const [dropdownTo, setDropdownTo] = useState(false);
+  const [dropdownFrom, setDropdownFrom] = useState(false);
   useEffect(() => {
     destination
       ? fetch(
@@ -23,8 +25,28 @@ const NewTripForm = () => {
               })
             );
           })
-      : setDropdown(false);
+      : setDropdownTo(false);
   }, [destination]);
+
+  useEffect(() => {
+    depart
+      ? fetch(
+          `https://api.geoapify.com/v1/geocode/autocomplete?text=${depart}&apiKey=${autofillKey}`
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            setSearchData(
+              data.features.map((d) => {
+                return {
+                  country: d.properties.country,
+                  city: d.properties.city,
+                  id: d.properties.place_id,
+                };
+              })
+            );
+          })
+      : setDropdownFrom(false);
+  }, [depart]);
   return (
     <FormStyled>
       <div className="main-con ticket">
@@ -34,27 +56,26 @@ const NewTripForm = () => {
         </div>
         <form action="" id="main">
           <label htmlFor="from">From:</label>
-          <input type="text" required id="from" />
-          <label htmlFor="destination">To:</label>
           <input
-            id="destination"
             type="text"
-            value={destination}
+            required
+            id="from"
+            value={depart}
             onChange={(e) => {
-              setDestination(e.target.value);
-              setDropdown(true);
+              setDepart(e.target.value);
+              setDropdownFrom(true);
             }}
           />
-          <div className="dropdown">
+          <div className="dropdown" id="departureDD">
             <ul>
-              {dropdown &&
+              {dropdownFrom &&
                 searchData.map((i) => {
                   return (
                     <li
                       key={i.id}
                       onClick={() => {
-                        setDestination(`${i.city}, ${i.country}`);
-                        setDropdown(false);
+                        setDepart(`${i.city}, ${i.country}`);
+                        setDropdownFrom(false);
                       }}
                     >
                       <i className="fa-solid fa-earth-americas"></i> {i.city},{" "}
@@ -64,6 +85,37 @@ const NewTripForm = () => {
                 })}
             </ul>
           </div>
+          <label htmlFor="destination">To:</label>
+          <input
+            id="destination"
+            type="text"
+            value={destination}
+            onChange={(e) => {
+              setDestination(e.target.value);
+              setDropdownTo(true);
+            }}
+          />
+          <div className="dropdown" id="arrivalDD">
+            <ul>
+              {dropdownTo &&
+                searchData.map((i) => {
+                  return (
+                    <li
+                      key={i.id}
+                      onClick={() => {
+                        setDestination(`${i.city}, ${i.country}`);
+                        setDropdownTo(false);
+                      }}
+                    >
+                      <i className="fa-solid fa-earth-americas"></i> {i.city},{" "}
+                      {i.country}
+                    </li>
+                  );
+                })}
+            </ul>
+          </div>
+          <label htmlFor="duration">Days:</label>
+          <input type="number" />
         </form>
       </div>
       <div className="stub-con ticket">
@@ -118,6 +170,7 @@ const FormStyled = styled.div`
     display: flex;
     flex-direction: column;
     padding: 15px;
+    justify-content: space-evenly;
   }
 
   #stub {
@@ -125,11 +178,10 @@ const FormStyled = styled.div`
   }
 
   input {
-    width: 25%;
     height: 40px;
     border-radius: 7px;
-    font-size: 1.2rem;
-    border: 3px solid var(--light-green);
+    font-size: 1rem;
+    border: none;
   }
 
   input:focus {
@@ -137,8 +189,18 @@ const FormStyled = styled.div`
   }
 
   .dropdown {
-    background: var(--green);
+    background: var(--orange);
     border-radius: 10px;
+  }
+
+  #arrivalDD {
+    position: absolute;
+    top: 59%;
+  }
+
+  #departureDD {
+    position: absolute;
+    top: 50%;
   }
 
   .dropdown li {
@@ -154,6 +216,12 @@ const FormStyled = styled.div`
 
   .fa-earth-americas {
     margin-right: 10px;
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 10px;
+    height: 35%;
   }
 `;
 export default NewTripForm;
