@@ -143,13 +143,15 @@ const NavbarStyled = styled.nav`
     background: var(--orange);
   }
 
+  
   .dropdown li {
     width: 100%;
     padding: 10px;
+    
   }
 
   .dropdown a {
-    width: 100%;
+   
     padding: 10px;
   }
 
