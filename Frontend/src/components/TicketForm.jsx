@@ -184,11 +184,14 @@ const FormStyled = styled.div`
   }
 
   #stub {
+    display: flex;
+    flex-direction: column;
     height: 85%;
     padding: 15px;
   }
 
   input {
+    
     height: 40px;
     border-radius: 7px;
     font-size: 1rem;

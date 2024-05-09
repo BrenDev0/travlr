@@ -131,6 +131,9 @@ const NavbarStyled = styled.nav`
   padding: 10px;
   background: var(--gray);
 
+
+  
+
   .dropdown {
     display: flex;
     flex-direction: column;
@@ -139,14 +142,16 @@ const NavbarStyled = styled.nav`
     top: 7%;
     z-index: 2;
     border-radius: 10px;
-
     background: var(--orange);
   }
 
-  
+  .nav-links{
+    text-align: center;
+  }
   .dropdown li {
     width: 100%;
     padding: 10px;
+    
     
   }
 

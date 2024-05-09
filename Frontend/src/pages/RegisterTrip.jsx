@@ -32,7 +32,7 @@ const RegisterTrip = () => {
   ) : (
     <Layout>
       <RegisterStyled>
-        <TicketForm width={"60%"} height={"50%"} />
+        <TicketForm width={"75%"} height={"65%"} />
       </RegisterStyled>
     </Layout>
   );
