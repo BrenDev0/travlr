@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { autofillKey } from "../utils/keys";
+import { autofillKey, coordinatesKey } from "../utils/keys";
 
 const TicketForm = ({ width, height }) => {
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
+  const [city, setCity] = useState("")
   const [searchData, setSearchData] = useState([]);
   const [dropdownTo, setDropdownTo] = useState(false);
   const [dropdownFrom, setDropdownFrom] = useState(false);
+  const [trip, setTrip] = useState({
+    country: destination.country,
+    city: destination.city,
+    coordinates: {}
+
+  })
   const style = {
     width: width,
     height: height,
@@ -51,6 +58,16 @@ const TicketForm = ({ width, height }) => {
           })
       : setDropdownFrom(false);
   }, [depart]);
+
+//--------------- submit form ---------------
+const handleSubmit = async (e) => {
+  e.preventDefault()
+  const response = await fetch(`https://geocode.maps.co/search?q=${destination}&api_key=${coordinatesKey}`)
+  const data = await response.json();
+  setTrip({...trip, coordinates: {lat: data[0].lat, lon: data[0].lon}});
+}
+
+
   return (
     <FormStyled style={style}>
       <div className="main-con ticket">
@@ -58,7 +75,7 @@ const TicketForm = ({ width, height }) => {
           <i className="fa-solid fa-plane"></i>
           <span>Ticket</span>
         </div>
-        <form action="" id="main">
+        <form onSubmit={handleSubmit} id="main">
           <label htmlFor="from">From:</label>
           <input
             type="text"
@@ -107,6 +124,7 @@ const TicketForm = ({ width, height }) => {
                     <li
                       key={i.id}
                       onClick={() => {
+                        setTrip({...trip, country: i.country, city: i.city});
                         setDestination(`${i.city}, ${i.country}`);
                         setDropdownTo(false);
                       }}
@@ -120,6 +138,7 @@ const TicketForm = ({ width, height }) => {
           </div>
           <label htmlFor="duration">Days:</label>
           <input type="number" />
+          <button>Submit</button>
         </form>
       </div>
       <div className="stub-con ticket">

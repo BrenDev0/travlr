@@ -21,6 +21,7 @@ app.use(cookieParser());
 //routes
 app.use("/api/auth", userRoutes);
 
+
 const server = () => {
   db();
   app.listen(PORT, () => {
