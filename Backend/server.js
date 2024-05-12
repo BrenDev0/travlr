@@ -1,5 +1,6 @@
 require("dotenv").config();
 const userRoutes = require("./routes/userRoutes");
+const tripsRoute = require("./routes/tripsRoutes")
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { db } = require("./db/db");
@@ -20,6 +21,7 @@ app.use(cookieParser());
 
 //routes
 app.use("/api/auth", userRoutes);
+app.use("/api/trips", tripsRoute )
 
 
 const server = () => {
