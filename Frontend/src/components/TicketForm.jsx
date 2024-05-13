@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { autofillKey, coordinatesKey } from "../utils/keys";
+import { useTripsContext } from "../contex/TripsContext";
+import { useGlobalContext } from "../contex/GlobalContex";
 
 const TicketForm = ({ width, height }) => {
+  const { error, setError } = useGlobalContext()
+  const { newTrip } = useTripsContext()
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [city, setCity] = useState("")
@@ -64,7 +68,10 @@ const handleSubmit = async (e) => {
   e.preventDefault()
   const response = await fetch(`https://geocode.maps.co/search?q=${destination}&api_key=${coordinatesKey}`)
   const data = await response.json();
-  setTrip({...trip, coordinates: {lat: data[0].lat, lon: data[0].lon}});
+  console.log(data[0].lat)
+  setTrip({...trip, coordinates: {lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon)}});
+  console.log(trip)
+  newTrip(trip)
 }
 
 

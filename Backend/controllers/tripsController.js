@@ -1,18 +1,21 @@
 const Trip = require("../models/tripsModel")
 const User = require("../models/userModel")
 
-
+// register a new trip
 const registerTrip =  async(req, res) => {
     const { title, country, city, coordinates, } =  req.body;
     const user = await User.findById(req.user)
-
+    console.log(coordinates)
     const trip = Trip({
         user,
         title,
-        destination: {
+        destinations: {
             country,
             city,
-            coordinates
+            coordinates: {
+                lat: coordinates.lat,
+                lon: coordinates.lon
+            }
         }
 
     })
@@ -31,4 +34,16 @@ const registerTrip =  async(req, res) => {
 
 }
 
-module.exports = { registerTrip}
+
+//get all trips 
+
+const getTrips = async (req, res) => {
+    const trips = await Trip.find({
+        user: req.user,
+
+    })
+
+    res.status(200).json(trips)
+}
+
+module.exports = { registerTrip, getTrips }

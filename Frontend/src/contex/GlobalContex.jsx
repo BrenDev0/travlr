@@ -4,9 +4,14 @@ import axios from "axios";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  
   const AUTH_URL = "http://localhost:5000/api/auth";
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(false)
+  const [error, setError] = useState(null)
+
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`
 
   useEffect(() => {
     getUser();
@@ -16,6 +21,7 @@ export const GlobalProvider = ({ children }) => {
     const user = await axios.get(AUTH_URL);
 
     setUser(user.data.status);
+    user.data.token ? setToken(user.data.token) : null
   };
   return (
     <GlobalContext.Provider
@@ -25,6 +31,8 @@ export const GlobalProvider = ({ children }) => {
         user,
         isLoading,
         setIsLoading,
+        error,
+        setError
       }}
     >
       {children}

@@ -15,18 +15,17 @@ const DestinationSchema = new mongoose.Schema({
     required: true,
   },
 
-  city: {
-    name: {
-      type: String,
-      required: true,
-    },
-    coordinates: {
-      type: object,
-      required: true,
-    },
-
-    places: [PlaceSchema],
+  city:{
+    type: String,
+    required: true
   },
+
+  coordinates: {
+    type: Object,
+    required: true
+  },
+
+  places: [PlaceSchema]
 });
 
 const TripSchema = new mongoose.Schema({
