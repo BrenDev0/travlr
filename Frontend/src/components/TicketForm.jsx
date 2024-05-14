@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { autofillKey, coordinatesKey } from "../utils/keys";
+import { autofillKey } from "../utils/keys";
 import { useTripsContext } from "../contex/TripsContext";
 import { useGlobalContext } from "../contex/GlobalContex";
+
 
 const TicketForm = ({ width, height }) => {
   const { error, setError } = useGlobalContext()
@@ -148,7 +149,7 @@ const handleSubmit = async (e) => {
           </div>
           <label htmlFor="duration">Days:</label>
           <input type="number" />
-          <button>Submit</button>
+          <div className="btn-con"><button className="btn">Submit</button></div>
         </form>
       </div>
       <div className="stub-con ticket">
@@ -167,6 +168,24 @@ const FormStyled = styled.div`
   height: 100%;
   border-radius: 10px;
   display: flex;
+
+  .btn:hover{
+   cursor: pointer;
+  }
+
+  .btn-con{
+    width:100%;
+    display: flex;
+    justify-content: flex-end
+  }
+
+  .btn{
+    background-color: var(--orange);
+    width: 20%;
+    height: 100%;
+    border-radius: 10px;
+    margin-top: 10px
+  }
 
   .fa-plane {
     color: var(--orange);

@@ -32,6 +32,7 @@ const RegisterTrip = () => {
   ) : (
     <Layout>
       <RegisterStyled>
+        <h1>Register a new trip</h1>
         <TicketForm width={"75%"} height={"65%"} />
       </RegisterStyled>
     </Layout>
@@ -40,11 +41,17 @@ const RegisterTrip = () => {
 
 const RegisterStyled = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 90%;
   background: var(--white);
+
+  h1{
+    font-size: 2.2rem;
+    margin: 5%;
+  }
 `;
 
 export default RegisterTrip;
