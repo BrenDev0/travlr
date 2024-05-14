@@ -9,7 +9,6 @@ const TicketForm = ({ width, height }) => {
   const { newTrip } = useTripsContext()
   const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
-  const [city, setCity] = useState("")
   const [searchData, setSearchData] = useState([]);
   const [dropdownTo, setDropdownTo] = useState(false);
   const [dropdownFrom, setDropdownFrom] = useState(false);
@@ -36,6 +35,7 @@ const TicketForm = ({ width, height }) => {
                   country: d.properties.country,
                   city: d.properties.city,
                   id: d.properties.place_id,
+                  coordinates: d.geometry.coordinates
                 };
               })
             );
@@ -50,12 +50,14 @@ const TicketForm = ({ width, height }) => {
         )
           .then((res) => res.json())
           .then((data) => {
+            console.log(data.features)
             setSearchData(
               data.features.map((d) => {
                 return {
                   country: d.properties.country,
                   city: d.properties.city,
                   id: d.properties.place_id,
+                  coordinates: d.geometry.coordinates
                 };
               })
             );
@@ -66,12 +68,10 @@ const TicketForm = ({ width, height }) => {
 //--------------- submit form ---------------
 const handleSubmit = async (e) => {
   e.preventDefault()
-  const response = await fetch(`https://geocode.maps.co/search?q=${destination}&api_key=${coordinatesKey}`)
-  const data = await response.json();
-  console.log(data[0].lat)
-  setTrip({...trip, coordinates: {lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon)}});
-  console.log(trip)
   newTrip(trip)
+  setDepart("")
+  setDestination("")
+  setTrip({...trip, coordinates:{}})
 }
 
 
@@ -131,7 +131,10 @@ const handleSubmit = async (e) => {
                     <li
                       key={i.id}
                       onClick={() => {
-                        setTrip({...trip, country: i.country, city: i.city});
+                        setTrip({...trip, country: i.country, city: i.city, coordinates: {
+                          lat: i.coordinates[1],
+                          lon: i.coordinates[0],
+                        }});
                         setDestination(`${i.city}, ${i.country}`);
                         setDropdownTo(false);
                       }}

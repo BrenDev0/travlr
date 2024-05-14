@@ -5,7 +5,7 @@ const User = require("../models/userModel")
 const registerTrip =  async(req, res) => {
     const { title, country, city, coordinates, } =  req.body;
     const user = await User.findById(req.user)
-    console.log(coordinates)
+    
     const trip = Trip({
         user,
         title,
