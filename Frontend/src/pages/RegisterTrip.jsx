@@ -7,6 +7,7 @@ import { useGlobalContext } from "../contex/GlobalContex";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";
 
 import TicketForm from "../components/TicketForm";
+import RegisterSkeleton from "../components/skeletons/RegisterSkeleton";
 
 const RegisterTrip = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const RegisterTrip = () => {
   }, [user]);
 
   return isLoading ? (
-    <HomeSkeleton />
+    <RegisterSkeleton />
   ) : (
     <Layout>
       <RegisterStyled>
@@ -49,8 +50,8 @@ const RegisterStyled = styled.div`
   background: var(--white);
 
   h1{
-    font-size: 2.2rem;
-    margin: 5%;
+    font-size: 2rem;
+    margin: 3%;
   }
 `;
 

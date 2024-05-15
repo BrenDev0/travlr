@@ -169,6 +169,8 @@ const FormStyled = styled.div`
   border-radius: 10px;
   display: flex;
 
+  box-shadow: 3px 5px 15px var(--black);
+
   .btn:hover{
    cursor: pointer;
   }
@@ -197,14 +199,14 @@ const FormStyled = styled.div`
   .main-con {
     border-right: none;
     width: 75%;
-    height: 85%;
+    height: 100%;
     display: flex;
     flex-direction: column;
   }
 
   .stub-con {
     width: 25%;
-    height: 85%;
+    height: 100%;
     border-left: 2px dashed gray;
   }
 
@@ -258,7 +260,7 @@ const FormStyled = styled.div`
 
   #arrivalDD {
     position: absolute;
-    top: 59%;
+    top: 71%;
   }
 
   #departureDD {
