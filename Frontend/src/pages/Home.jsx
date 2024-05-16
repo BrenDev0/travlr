@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useGlobalContext } from "../contex/GlobalContex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 import Map from "../components/Map";
 import HomeSkeleton from "../components/skeletons/HomeSkeleton";

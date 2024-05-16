@@ -22,7 +22,7 @@ gatherTrips()
           trips && trips.map((i) => {
            return  i.destinations.map((d) => {
               return(
-                <Marker position={[d.coordinates.lat, d.coordinates.lon]}>
+                <Marker key={i._id} position={[d.coordinates.lat, d.coordinates.lon]}>
                   <Popup>
                     {d.city}, {d.country}
                   </Popup>

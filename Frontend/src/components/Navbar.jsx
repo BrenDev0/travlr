@@ -37,7 +37,7 @@ const Navbar = () => {
           <a href="/">Home</a>
         </li>
         <li className="nav-links">
-          <a href="/">Map</a>
+          <a href="/map">Map</a>
         </li>
         <li
           className="nav-links"
@@ -145,9 +145,9 @@ const NavbarStyled = styled.nav`
     background: var(--orange);
   }
 
-  .nav-links{
-    text-align: center;
-  }
+  
+
+ 
   .dropdown li {
     width: 100%;
     padding: 10px;
@@ -216,11 +216,12 @@ const NavbarStyled = styled.nav`
 
   .side-bar .nav-links {
     padding: 20px;
+    text-align: center;
   }
 
   .fa-solid {
     color: var(--red);
-    font-size: 2rem;
+    font-size: 1.5rem;
     transition: 0.5s;
   }
 
@@ -238,12 +239,20 @@ const NavbarStyled = styled.nav`
     justify-content: center;
     align-items: center;
     border-radius: 7px;
+    text-align: center;
+    
+  }
+
+  .side-bar  .fa-solid {
+    margin: 5%;
   }
 
   .side-bar .nav-links {
     width: 100%;
-    justify-content: left;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
   }
 
   .nav-links a {
