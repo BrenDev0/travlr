@@ -51,7 +51,7 @@ const Navbar = () => {
           <div className="dropdown">
             <ul>
               <li>
-                <a href="">Your Trips</a>
+                <a href="/trips">Your Trips</a>
               </li>
               <li>
                 <a href="/trips/register">Register a new trip</a>
@@ -95,7 +95,7 @@ const Navbar = () => {
           <div className="dropdown">
             <ul>
               <li>
-                <a href="">Your Trips</a>
+                <a href="/trips">Your Trips</a>
               </li>
               <li>
                 <a href="/trips/register">Register a new trip</a>
