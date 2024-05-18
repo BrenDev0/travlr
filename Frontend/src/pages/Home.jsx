@@ -30,7 +30,7 @@ const Home = () => {
   ) : (
     <Layout>
       <HomeStyled>
-        <Map />
+        home
       </HomeStyled>
     </Layout>
   );

@@ -3,12 +3,15 @@ import styled from "styled-components"
 import Layout from '../styles/Layout'
 import { useGlobalContext } from '../contex/GlobalContex'
 import HomeSkeleton from '../components/skeletons/HomeSkeleton'
+import { useTripsContext } from '../contex/TripsContext'
 
 const Trips = () => {
   const { user, getUser, isLoading, setIsLoading } =  useGlobalContext()
+  const { trips, gatherTrips} = useTripsContext()
   
   useEffect(() => {
     getUser();
+    gatherTrips();
     setTimeout(() => {
       if (user === null) {
         return null;
