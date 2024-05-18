@@ -2,12 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../styles/Layout";
-
 import { useGlobalContext } from "../contex/GlobalContex";
-import HomeSkeleton from "../components/skeletons/HomeSkeleton";
-
-import TicketForm from "../components/TicketForm";
 import RegisterSkeleton from "../components/skeletons/RegisterSkeleton";
+import TripForm from "../components/TripForm";
 
 const RegisterTrip = () => {
   const navigate = useNavigate();
@@ -33,8 +30,8 @@ const RegisterTrip = () => {
   ) : (
     <Layout>
       <RegisterStyled>
-        <h1>Register a new trip</h1>
-        <TicketForm width={"75%"} height={"65%"} />
+        
+        <TripForm />
       </RegisterStyled>
     </Layout>
   );
