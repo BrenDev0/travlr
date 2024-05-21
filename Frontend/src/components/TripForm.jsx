@@ -7,7 +7,7 @@ const TripForm = () => {
   const [destinationResults, setDestinationResults] = useState([])
   const [destinationDropdown, setDestinationDropdown] = useState(false)
   const [place, setPlace] = useState("")
-  const [category, setCategory] = useState("catering.restaurant")
+  const [category, setCategory] = useState("catering")
     const [form, setForm] = useState({
         country: '',
         city: '',
