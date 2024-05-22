@@ -7,6 +7,9 @@ const TripForm = () => {
   const [destinationResults, setDestinationResults] = useState([])
   const [destinationDropdown, setDestinationDropdown] = useState(false)
   const [place, setPlace] = useState("")
+  const [placeResults, setPlaceResults] = useState([])
+  const [placeDropdown, setPlaceDropdown] = useState(false)
+  
   const [category, setCategory] = useState("catering")
     const [form, setForm] = useState({
         country: '',
@@ -108,10 +111,7 @@ form{
   justify-content: space-evenly;
 }
 
-.places{
-  border-left: 1px solid var(--red);
-  border-right: 1px solid var(--red)
-}
+
 
 .form-div{
   display: flex;
