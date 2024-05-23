@@ -11,7 +11,7 @@ const TripForm = () => {
   const [placeResults, setPlaceResults] = useState([])
   const [placeDropdown, setPlaceDropdown] = useState(false)
   
-  const [category, setCategory] = useState("catering")
+  const [category, setCategory] = useState("catering.bar")
     const [form, setForm] = useState({
         country: '',
         city: '',
@@ -64,7 +64,7 @@ const TripForm = () => {
               <label htmlFor="destination">Destination:</label>
               <input type="text" required id='destination' value={destination} onChange={(e) => {setDestination(e.target.value); setDestinationDropdown(true)}} />
               {
-                destinationDropdown && <div className="dropdown">
+                destinationDropdown && <div className="dropdown city">
                   <ul>
                     {
                       destinationResults.map((i) => {
@@ -88,10 +88,20 @@ const TripForm = () => {
                   </ul>
                 </div>
               }
+            </div> 
+            <div className="form-div">
+              <label htmlFor="place">PLace</label>
+              <div className="select">
+                <div className="info">
+                  <span>{category}</span>
+                </div>
+              </div>
+            </div>
+            <div className="form-div">
               <label htmlFor="place">PLace</label>
               <input type="text" required value={place} onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
               {
-                placeDropdown && <div className="dropdown">
+                placeDropdown && <div className="dropdown place">
                   <ul>
                     {
                       placeResults.map((i) => {
@@ -122,27 +132,49 @@ const FormSyled = styled.div`
 width: 100%;
 height: 100%;
 
+
+
 form{
   width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-evenly;
+  height: 10%;
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ background: var(--orange);
+ box-shadow: 0 2px 7px var(--black);
 }
 
 
 
 .form-div{
   display: flex;
-  flex-direction: column;
-  height: 100%;
-  
+  justify-content: space-around; 
+}
+
+.form-div label{
+  color: var(--white);
+  margin-right: 10px;
+}
+
+.form-div input{
+  border-radius: 5px;
 }
 
 .dropdown {
-border: 2px solid var(--black);
-border-radius: 10px;
-background: var(--orange);
+border: 2px solid var(--gray);
+border-radius: 0 0 10px 10px;
+background: var(--white);
+position: absolute;
+}
 
+.city{
+  left: 14.5%;
+  top: 17%
+}
+
+.place{
+  right: 4%;
+  top: 17%;
 }
 
 .dropdown li {
@@ -158,12 +190,6 @@ background: var(--orange);
 .dropdown li:last-child{
   border-radius: 0 0 10px 10px
 }
-.dropdown li:first-child{
-  border-radius: 10px 10px 0 0
-}
-
-
-    
 
 `
 
