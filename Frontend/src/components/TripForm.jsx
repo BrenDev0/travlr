@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
+import { placeIcon } from '../utils/icons'
 
 const TripForm = () => {
   const [destination, setDestination] = useState("")
@@ -46,16 +47,20 @@ const TripForm = () => {
       fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${form.coordinates.lon},${form.coordinates.lat}&limit=20&apiKey=${autofillKey}
       `).then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        setPlaceResults(data.features.map((i) => {
+          return {
+            category: category,
+            name:i.properties.address_line1
+          }
+        }))
       })
-      : null
+      : setPlaceDropdown(false)
 
     },[place])
   return (
     <FormSyled>
         <form action="">
             <div className="destination form-div">
-              <h2>Choose your destination</h2>
               <label htmlFor="destination">Destination:</label>
               <input type="text" required id='destination' value={destination} onChange={(e) => {setDestination(e.target.value); setDestinationDropdown(true)}} />
               {
@@ -76,7 +81,31 @@ const TripForm = () => {
                             })
                             setDestination(`${i.city}, ${i.country}`);
                             setDestinationDropdown(false)
-                          }}>{i.city}, {i.country}</li>
+                          }}>{placeIcon} {i.city}, {i.country}</li>
+                        )
+                      })
+                    }
+                  </ul>
+                </div>
+              }
+              <label htmlFor="place">PLace</label>
+              <input type="text" required value={place} onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
+              {
+                placeDropdown && <div className="dropdown">
+                  <ul>
+                    {
+                      placeResults.map((i) => {
+                        return (
+                          <li key={i.id} onClick={() => {
+                            setForm({
+                             ...form, places: [...form.places, {
+                              category: i.category,
+                              name: i.name
+                             }]
+                            })
+                            setPlace(`${i.name}`);
+                            setPlaceDropdown(false)
+                          }}>{placeIcon} {i.name}</li>
                         )
                       })
                     }
@@ -84,17 +113,6 @@ const TripForm = () => {
                 </div>
               }
             </div>
-            <div className="places form-div">
-              
-              <label htmlFor="search">Search:</label>
-              <input type="text" required id='search' value={place} onChange={(e) => setPlace(e.target.value)} />
-              <input type="file" name="images" id="images" />
-            </div>
-            <div className=" form-div">
-              <label htmlFor="test">test</label>
-              <input type="text" id='test' />
-            </div>
-
         </form>
     </FormSyled>
   )
