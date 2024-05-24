@@ -11,7 +11,7 @@ const TripForm = () => {
   const [placeResults, setPlaceResults] = useState([])
   const [placeDropdown, setPlaceDropdown] = useState(false)
   
-  const [category, setCategory] = useState("catering.bar")
+  const [category, setCategory] = useState("catering")
     const [form, setForm] = useState({
         country: '',
         city: '',
@@ -90,15 +90,14 @@ const TripForm = () => {
               }
             </div> 
             <div className="form-div">
-              <label htmlFor="place">PLace</label>
               <div className="select">
                 <div className="info">
-                  <span>{category}</span>
+                  <span>Select a category</span>
                 </div>
               </div>
             </div>
             <div className="form-div">
-              <label htmlFor="place">PLace</label>
+              <label htmlFor="place">Place:</label>
               <input type="text" required value={place} onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
               {
                 placeDropdown && <div className="dropdown place">
