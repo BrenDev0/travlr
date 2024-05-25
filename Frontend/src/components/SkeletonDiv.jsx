@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const SkeletonDiv = ({ width, height, br }) => {
+const SkeletonDiv = ({ width, height, br, data}) => {
   return (
     <SkeletonStyled
       style={{ width: width, height: height, borderRadius: br }}
-    ></SkeletonStyled>
+    >{data}</SkeletonStyled>
   );
 };
 

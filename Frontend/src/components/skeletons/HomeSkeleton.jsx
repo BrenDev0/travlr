@@ -2,10 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import SkeletonDiv from "../SkeletonDiv";
 
+
+
 const HomeSkeleton = () => {
   return (
     <HomeSkeletonStyled>
-      <SkeletonDiv width={"100vw"} height={"100vh"} br={"10px"} />
+      <SkeletonDiv width={"100vw"} height={"100vh"} br={"10px"}/>
     </HomeSkeletonStyled>
   );
 };

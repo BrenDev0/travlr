@@ -1,14 +1,17 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
-import { chevronDown, placeIcon } from '../utils/icons'
+import { accomidationIcon, cateringIcon, chevronDown, chevronUp, museumIcon, placeIcon } from '../utils/icons'
+import { useTripsContext } from "../contex/TripsContext"
 
 const MomentsForm = () => {
-  const [selectedAdventure, setSelectedAdventure] = useState("Chose an adventure")
+  const { trips, gatherTrips } = useTripsContext()
+  const [selectedAdventure, setSelectedAdventure] = useState("Choose an adventure")
+  const [adventuresDropdown, setAdventuresDropdown] = useState(false)
   const [place, setPlace] = useState("")
   const [placeResults, setPlaceResults] = useState([])
   const [placeDropdown, setPlaceDropdown] = useState(false)
-  
+  const [categoryDropdown, setCategoryDropdown] = useState(false)
   const [category, setCategory] = useState("catering")
     const [form, setForm] = useState({
         country: '',
@@ -18,6 +21,10 @@ const MomentsForm = () => {
     })
 
     
+    useEffect(() =>{
+      gatherTrips()
+    }, [])
+
 
     useEffect(() => {
       place ?
@@ -39,12 +46,36 @@ const MomentsForm = () => {
         <form action="">
             <div className="destination form-div">
               <div className="adventureSelect">
-              <span>{selectedAdventure} {chevronDown}</span>
+              <span onClick={() => adventuresDropdown ? setAdventuresDropdown(false) : setAdventuresDropdown(true)}>{selectedAdventure} {adventuresDropdown ? chevronUp : chevronDown}</span>
+              {
+                adventuresDropdown && <div className="dropdown adventures">
+                <ul>
+                  {
+                    trips.map((trip) => {
+                      return(
+                        <li>{trip.destinations[0].city}</li>
+                      )
+                    })
+                  }
+                  
+                </ul>
+              </div>
+              }
               </div> 
             </div> 
             <div className="form-div">
               <div className="adventureSelect">
-                <span>Select a category {chevronDown}</span>
+                <span onClick={() => categoryDropdown ? setCategoryDropdown(false): setCategoryDropdown(true)}>Select a category {categoryDropdown ? chevronUp : chevronDown}</span>
+                {
+                  categoryDropdown && 
+                <div className="dropdown">
+                  <ul>
+                    <li>{cateringIcon}Food and drink</li>
+                    <li>{museumIcon}Mesuems</li>
+                    <li>{accomidationIcon}Hotel</li>
+                  </ul>
+                </div>
+                }
               </div>
             </div>
             <div className="form-div">
@@ -121,6 +152,10 @@ form{
   padding: 5px
 }
 
+.adventureSelect:hover{
+cursor: default
+}
+
 .dropdown {
 border: 2px solid var(--gray);
 border-radius: 0 0 10px 10px;
@@ -156,6 +191,14 @@ position: absolute;
   color: var(--orange);
 }
 .fa-circle-chevron-down:hover{
+  cursor: pointer;
+}
+
+.fa-circle-chevron-up{
+  color: var(--red)
+}
+
+.fa-circle-chevron-up:hover{
   cursor: pointer;
 }
 

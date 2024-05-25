@@ -7,3 +7,4 @@ export const naturalIcon = <i className="fa-solid fa-tree"></i>
 export const tourismIcon = <i className="fa-solid fa-van-shuttle"></i>
 export const placeIcon = <i className="fa-solid fa-location-dot"></i>
 export const chevronDown = <i className="fa-solid fa-circle-chevron-down"></i>
+export const chevronUp = <i className="fa-solid fa-circle-chevron-up"></i>
