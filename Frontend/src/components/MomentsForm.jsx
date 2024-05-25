@@ -1,12 +1,10 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
-import { placeIcon } from '../utils/icons'
+import { chevronDown, placeIcon } from '../utils/icons'
 
-const TripForm = () => {
-  const [destination, setDestination] = useState("")
-  const [destinationResults, setDestinationResults] = useState([])
-  const [destinationDropdown, setDestinationDropdown] = useState(false)
+const MomentsForm = () => {
+  const [selectedAdventure, setSelectedAdventure] = useState("Chose an adventure")
   const [place, setPlace] = useState("")
   const [placeResults, setPlaceResults] = useState([])
   const [placeDropdown, setPlaceDropdown] = useState(false)
@@ -19,28 +17,7 @@ const TripForm = () => {
         places: []
     })
 
-    useEffect(() => {
-      destination
-      ? fetch(
-          `https://api.geoapify.com/v1/geocode/autocomplete?text=${destination}&apiKey=${autofillKey}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            setDestinationResults(
-              data.features.map((d) => {
-                return {
-                  country: d.properties.country,
-                  city: d.properties.city,
-                  id: d.properties.place_id,
-                  coordinates: d.geometry.coordinates
-                };
-              })
-            )
-            
-            ;
-          })
-      : setDestinationDropdown(false)
-    }, [destination])
+    
 
     useEffect(() => {
       place ?
@@ -61,44 +38,17 @@ const TripForm = () => {
     <FormSyled>
         <form action="">
             <div className="destination form-div">
-              <label htmlFor="destination">Destination:</label>
-              <input type="text" required id='destination' value={destination} onChange={(e) => {setDestination(e.target.value); setDestinationDropdown(true)}} />
-              {
-                destinationDropdown && <div className="dropdown city">
-                  <ul>
-                    {
-                      destinationResults.map((i) => {
-                        return (
-                          <li key={i.id} onClick={() => {
-                            setForm({
-                              country: i.country,
-                              city: i.city,
-                              coordinates: {
-                                lat: i.coordinates[1],
-                                lon: i.coordinates[0],
-                              },
-                              places: []
-                            })
-                            setDestination(`${i.city}, ${i.country}`);
-                            setDestinationDropdown(false)
-                          }}>{placeIcon} {i.city}, {i.country}</li>
-                        )
-                      })
-                    }
-                  </ul>
-                </div>
-              }
+              <div className="adventureSelect">
+              <span>{selectedAdventure} {chevronDown}</span>
+              </div> 
             </div> 
             <div className="form-div">
-              <div className="select">
-                <div className="info">
-                  <span>Select a category</span>
-                </div>
+              <div className="adventureSelect">
+                <span>Select a category {chevronDown}</span>
               </div>
             </div>
             <div className="form-div">
-              <label htmlFor="place">Place:</label>
-              <input type="text" required value={place} onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
+              <input type="text" required value={place} placeholder='location...' onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
               {
                 placeDropdown && <div className="dropdown place">
                   <ul>
@@ -135,19 +85,19 @@ height: 100%;
 
 form{
   width: 100%;
-  height: 10%;
  display: flex;
  justify-content: space-around;
  align-items: center;
  background: var(--orange);
  box-shadow: 0 2px 7px var(--black);
+ padding:15px
 }
 
 
 
 .form-div{
   display: flex;
-  justify-content: space-around; 
+  flex-direction: column;
 }
 
 .form-div label{
@@ -156,7 +106,19 @@ form{
 }
 
 .form-div input{
-  border-radius: 5px;
+  background: var(--gray);
+  border-radius: 7px;
+  padding: 5px
+}
+
+.form-div input:focus{
+  outline: 1.5px solid var(--red)
+}
+
+.adventureSelect {
+  background: var(--gray);
+  border-radius: 7px;
+  padding: 5px
 }
 
 .dropdown {
@@ -190,6 +152,15 @@ position: absolute;
   border-radius: 0 0 10px 10px
 }
 
+.fa-circle-chevron-down{
+  color: var(--orange);
+}
+.fa-circle-chevron-down:hover{
+  cursor: pointer;
+}
+
+
+
 `
 
-export default TripForm
+export default MomentsForm

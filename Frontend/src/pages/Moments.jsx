@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Layout from "../styles/Layout";
 import { useGlobalContext } from "../contex/GlobalContex";
 import RegisterSkeleton from "../components/skeletons/RegisterSkeleton";
-import TripForm from "../components/TripForm";
+import MomentsForm from "../components/MomentsForm";
 
-const RegisterTrip = () => {
+const Moments = () => {
   const navigate = useNavigate();
   const { setIsLoading, isLoading, user, getUser } = useGlobalContext();
 
@@ -30,8 +30,7 @@ const RegisterTrip = () => {
   ) : (
     <Layout>
       <RegisterStyled>
-        
-        <TripForm />
+        <MomentsForm />
       </RegisterStyled>
     </Layout>
   );
@@ -52,4 +51,4 @@ const RegisterStyled = styled.div`
   }
 `;
 
-export default RegisterTrip;
+export default Moments;

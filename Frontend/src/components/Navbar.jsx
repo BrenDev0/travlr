@@ -51,13 +51,10 @@ const Navbar = () => {
           <div className="dropdown">
             <ul>
               <li>
-                <a href="/trips">Your Trips</a>
+                <a href="/adventures">Adventures</a>
               </li>
               <li>
-                <a href="/trips/register">Register a new trip</a>
-              </li>
-              <li>
-                <a href="/trips/adventure">Share an adventure</a>
+                <a href="/adventures/moments">Moments</a>
               </li>
             </ul>
           </div>
@@ -95,13 +92,10 @@ const Navbar = () => {
           <div className="dropdown">
             <ul>
               <li>
-                <a href="/trips">Your Trips</a>
+                <a href="/adventures">Adventures</a>
               </li>
               <li>
-                <a href="/trips/register">Register a new trip</a>
-              </li>
-              <li>
-                <a href="/trips/adventure">Share an adventure</a>
+                <a href="/adventures/moments">Moments</a>
               </li>
             </ul>
           </div>

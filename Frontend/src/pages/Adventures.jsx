@@ -5,7 +5,7 @@ import { useGlobalContext } from '../contex/GlobalContex'
 import HomeSkeleton from '../components/skeletons/HomeSkeleton'
 import { useTripsContext } from '../contex/TripsContext'
 
-const Trips = () => {
+const Adventures = () => {
   const { user, getUser, isLoading, setIsLoading } =  useGlobalContext()
   const { trips, gatherTrips} = useTripsContext()
   
@@ -24,6 +24,29 @@ const Trips = () => {
       }
     }, 2000);
   }, [user]);
+
+  // useEffect(() => {
+  //   destination
+  //   ? fetch(
+  //       `https://api.geoapify.com/v1/geocode/autocomplete?text=${destination}&apiKey=${autofillKey}`
+  //     )
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         setDestinationResults(
+  //           data.features.map((d) => {
+  //             return {
+  //               country: d.properties.country,
+  //               city: d.properties.city,
+  //               id: d.properties.place_id,
+  //               coordinates: d.geometry.coordinates
+  //             };
+  //           })
+  //         )
+          
+  //         ;
+  //       })
+  //   : setDestinationDropdown(false)
+  // }, [destination])
   return (
     isLoading ? <HomeSkeleton /> 
     : <Layout>
@@ -36,4 +59,4 @@ const Trips = () => {
 
 const TripsStyled = styled.div``
 
-export default Trips
+export default Adventures
