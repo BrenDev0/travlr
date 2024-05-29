@@ -70,9 +70,9 @@ const MomentsForm = () => {
                   categoryDropdown && 
                 <div className="dropdown">
                   <ul>
-                    <li>{cateringIcon}Food and drink</li>
-                    <li>{museumIcon}Mesuems</li>
-                    <li>{accomidationIcon}Hotel</li>
+                    <li onClick={() => setCategory("catering")}>{cateringIcon} Food and drink</li>
+                    <li onClick={() => setCategory("museum")}>{museumIcon} Mesuems</li>
+                    <li onClick={() => setCategory("accomodations")}>{accomidationIcon} Hotel</li>
                   </ul>
                 </div>
                 }
