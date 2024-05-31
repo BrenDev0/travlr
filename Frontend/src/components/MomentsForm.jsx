@@ -6,7 +6,13 @@ import { useTripsContext } from "../contex/TripsContext"
 
 const MomentsForm = () => {
   const { trips, gatherTrips } = useTripsContext()
-  const [selectedAdventure, setSelectedAdventure] = useState("Choose an adventure")
+  const [selectedAdventure, setSelectedAdventure] = useState({
+    title: "Select an adventure",
+    city: "",
+    country: "",
+    coordinates: [],
+    places: []
+  })
   const [adventuresDropdown, setAdventuresDropdown] = useState(false)
   const [place, setPlace] = useState("")
   const [placeResults, setPlaceResults] = useState([])
@@ -28,7 +34,7 @@ const MomentsForm = () => {
 
     useEffect(() => {
       place ?
-      fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${form.coordinates.lon},${form.coordinates.lat}&limit=20&apiKey=${autofillKey}
+      fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${selectedAdventure.coordinates.lon},${selectedAdventure.coordinates.lat}&limit=20&apiKey=${autofillKey}
       `).then((res) => res.json())
       .then((data) => {
         setPlaceResults(data.features.map((i) => {
@@ -46,14 +52,14 @@ const MomentsForm = () => {
         <form action="">
             <div className="destination form-div">
               <div className="adventureSelect">
-              <span onClick={() => adventuresDropdown ? setAdventuresDropdown(false) : setAdventuresDropdown(true)}>{selectedAdventure} {adventuresDropdown ? chevronUp : chevronDown}</span>
+              <span onClick={() => adventuresDropdown ? setAdventuresDropdown(false) : setAdventuresDropdown(true)}>{selectedAdventure.title} {adventuresDropdown ? chevronUp : chevronDown}</span>
               {
                 adventuresDropdown && <div className="dropdown adventures">
                 <ul>
                   {
                     trips.map((trip) => {
                       return(
-                        <li>{trip.destinations[0].city}</li>
+                        <li onClick={() => setSelectedAdventure(trip)}>{trip.destinations[0].city}</li>
                       )
                     })
                   }

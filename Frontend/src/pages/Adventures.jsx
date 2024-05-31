@@ -1,6 +1,7 @@
   import React, { useEffect} from 'react'
 import styled from "styled-components"
 import Layout from '../styles/Layout'
+import TicketForm from "../components/TicketForm"
 import { useGlobalContext } from '../contex/GlobalContex'
 import HomeSkeleton from '../components/skeletons/HomeSkeleton'
 import { useTripsContext } from '../contex/TripsContext'
@@ -51,12 +52,19 @@ const Adventures = () => {
     isLoading ? <HomeSkeleton /> 
     : <Layout>
     <TripsStyled>
-        <h1>Trips</h1>
+        <TicketForm height={"65%"} width={"80%"} />
     </TripsStyled>
 </Layout>
   )
 }
 
-const TripsStyled = styled.div``
+const TripsStyled = styled.div`
+width: 100%;
+height: 90%;
+display: flex;
+justify-content: center;
+align-items: center;
+
+`
 
 export default Adventures

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { autofillKey } from "../utils/keys";
 import { useTripsContext } from "../contex/TripsContext";
 import { useGlobalContext } from "../contex/GlobalContex";
+import { searchIcon } from "../utils/icons";
 
 
 const TicketForm = ({ width, height }) => {
@@ -84,37 +85,15 @@ const handleSubmit = async (e) => {
           <span>Ticket</span>
         </div>
         <form onSubmit={handleSubmit} id="main">
-          <label htmlFor="from">From:</label>
+          <label htmlFor="from">Title:</label>
           <input
             type="text"
             required
             id="from"
-            value={depart}
-            onChange={(e) => {
-              setDepart(e.target.value);
-              setDropdownFrom(true);
-            }}
+            placeholder="Name your adventure"
+            
           />
-          <div className="dropdown" id="departureDD">
-            <ul>
-              {dropdownFrom &&
-                searchData.map((i) => {
-                  return (
-                    <li
-                      key={i.id}
-                      onClick={() => {
-                        setDepart(`${i.city}, ${i.country}`);
-                        setDropdownFrom(false);
-                      }}
-                    >
-                      <i className="fa-solid fa-earth-americas"></i> {i.city},{" "}
-                      {i.country}
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-          <label htmlFor="destination">To:</label>
+          <label htmlFor="destination">Destination:</label>
           <input
             id="destination"
             type="text"
@@ -147,8 +126,12 @@ const handleSubmit = async (e) => {
                 })}
             </ul>
           </div>
-          <label htmlFor="duration">Days:</label>
-          <input type="number" />
+          <label htmlFor="duration">Dates:</label>
+          <div className="dates">
+            
+            <input type="date" />
+            <input type="date" />
+          </div>
           <div className="btn-con"><button className="btn">Submit</button></div>
         </form>
       </div>
@@ -156,7 +139,7 @@ const handleSubmit = async (e) => {
         <div className="stripe"></div>
         <form id="stub">
           <label htmlFor="passengers">Passengers:</label>
-          <input type="text" />
+          <span><input type="text" /> {searchIcon}</span>
         </form>
       </div>
     </FormStyled>
@@ -168,8 +151,15 @@ const FormStyled = styled.div`
   height: 100%;
   border-radius: 10px;
   display: flex;
-
   box-shadow: 3px 5px 15px var(--black);
+
+  .dates{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+
+ 
 
   .btn:hover{
    cursor: pointer;
