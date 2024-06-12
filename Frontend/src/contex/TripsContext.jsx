@@ -8,8 +8,7 @@ const TripsContext = createContext()
 export const TripsProvider = ({children}) => {
     const TRIPS_URL = "http://localhost:5000/api/trips/"
 
-    const { setError } = useGlobalContext()
-
+    const { setError} = useGlobalContext()
 
     // states
     const [trips, setTrips] = useState([])
@@ -25,9 +24,9 @@ export const TripsProvider = ({children}) => {
     }
 
     const gatherTrips = async () => {
-        const trips = await axios.get(`${TRIPS_URL}/trips`)
+        const trips = await axios.get(`${TRIPS_URL}get-trips`)
 
-        setTrips(trips.data)
+        trips.data ? setTrips(trips.data) : null
     }
 
     return (

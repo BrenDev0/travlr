@@ -7,7 +7,7 @@ const router = require("express").Router();
 router.use(verifyUser)
 
 router.post("/register", registerTrip)
-router.get("/trips", getTrips)
+router.get("/get-trips", getTrips)
 
 
 module.exports = router

@@ -3,28 +3,25 @@ const User = require("../models/userModel")
 
 // register a new trip
 const registerTrip =  async(req, res) => {
-    const { title, country, city, coordinates, } =  req.body;
+    const { adventure, country, city, coordinates, } =  req.body;
     const user = await User.findById(req.user)
     
     const trip = Trip({
         user,
-        title,
-        destinations: {
-            country,
-            city,
-            coordinates: {
+        adventure,
+        country,
+        city,
+        coordinates: {
                 lat: coordinates.lat,
                 lon: coordinates.lon
-            }
-        }
-
+            },
+        moments: []    
     })
 
     try {
         if (!country|| !city || !coordinates){
             return res.status(400).json({message: "All fields required"})
         }
-
         await trip.save();
         res.status(200).json({messege: "Trip registered"})
     } catch (error) {

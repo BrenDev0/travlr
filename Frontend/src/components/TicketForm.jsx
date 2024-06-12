@@ -15,6 +15,7 @@ const TicketForm = ({ width, height }) => {
   const [dropdownTo, setDropdownTo] = useState(false);
   const [dropdownFrom, setDropdownFrom] = useState(false);
   const [trip, setTrip] = useState({
+    adventure: "" ,
     country: destination.country,
     city: destination.city,
     coordinates: {}
@@ -91,6 +92,8 @@ const handleSubmit = async (e) => {
             required
             id="from"
             placeholder="Name your adventure"
+            value={trip.adventure}
+            onChange={(e) => setTrip({...trip, adventure: e.target.value})}
             
           />
           <label htmlFor="destination">Destination:</label>
