@@ -9,3 +9,4 @@ export const placeIcon = <i className="fa-solid fa-location-dot"></i>
 export const chevronDown = <i className="fa-solid fa-circle-chevron-down"></i>
 export const chevronUp = <i className="fa-solid fa-circle-chevron-up"></i>
 export const searchIcon = <i className="fa-solid fa-magnifying-glass"></i>
+export const spaIcon = <i className="fa-solid fa-spa"></i>

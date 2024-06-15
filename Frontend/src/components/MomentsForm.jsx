@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
-import { accomidationIcon, cateringIcon, chevronDown, chevronUp, museumIcon, placeIcon } from '../utils/icons'
+import { accomidationIcon, cateringIcon, chevronDown, chevronUp, museumIcon, naturalIcon, placeIcon, spaIcon } from '../utils/icons'
 import { useTripsContext } from "../contex/TripsContext"
 
 const MomentsForm = () => {
@@ -91,6 +91,8 @@ const MomentsForm = () => {
                     <li key={"catering"} onClick={() => setCategory("catering")}>{cateringIcon} Food and drink</li>
                     <li key={"Museums"} onClick={() => setCategory("museum")}>{museumIcon} Mesuems</li>
                     <li key={"accommodation"} onClick={() => setCategory("accommodation")}>{accomidationIcon} Hotel</li>
+                    <li key={"leisure"} onClick={() => setCategory("leisure")}>{spaIcon} Parks & Leisure</li>
+                    <li key={"natural"} onClick={() => setCategory("natural")}>{naturalIcon} Nature</li>
                   </ul>
                 </div>
                 }
@@ -119,6 +121,9 @@ const MomentsForm = () => {
                   </ul>
                 </div>
               }
+            </div>
+            <div className="form-div">
+              <input type="file" />
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -218,6 +223,28 @@ position: absolute;
 
 .fa-circle-chevron-up:hover{
   cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+
+  form {
+    height: 100%;
+    width: 50%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+
+  form {
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
 
 
