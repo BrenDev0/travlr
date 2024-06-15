@@ -18,8 +18,9 @@ const TicketForm = ({ width, height }) => {
     adventure: "" ,
     country: destination.country,
     city: destination.city,
-    coordinates: {}
-
+    coordinates: {},
+    arrival: "",
+    departure: ""
   })
   const style = {
     width: width,
@@ -131,9 +132,8 @@ const handleSubmit = async (e) => {
           </div>
           <label htmlFor="duration">Dates:</label>
           <div className="dates">
-            
-            <input type="date" />
-            <input type="date" />
+            <span>Arrival: <input type="date" value={trip.arrival} onChange={(e) => setTrip({...trip, arrival: e.target.value})} /></span>
+            <span>Departure: <input type="date" value={trip.departure} onChange={(e) => setTrip({...trip, departure: e.target.value})} /></span>
           </div>
           <div className="btn-con"><button className="btn">Submit</button></div>
         </form>
