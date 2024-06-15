@@ -43,4 +43,24 @@ const getTrips = async (req, res) => {
     res.status(200).json(trips)
 }
 
-module.exports = { registerTrip, getTrips }
+//add moments
+const addMoment = async (req, res) => {
+    try {
+        const { id } = req.params
+        const moment = req.body
+        await Trip.findByIdAndUpdate(
+            {_id: id},
+        {
+            $push: {
+                moments: moment
+            }
+        }
+        )
+        res.status(200).json({message: "Moment added"})
+    } catch (error) {
+        return res.status(500).json(error)
+        
+    }
+}
+
+module.exports = { registerTrip, getTrips, addMoment }

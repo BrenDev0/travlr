@@ -29,12 +29,19 @@ export const TripsProvider = ({children}) => {
         trips.data ? setTrips(trips.data) : null
     }
 
+    const addMoment = async (moment, id) => {
+        await axios.put(`${TRIPS_URL}add-moment/${id}`, moment)
+        gatherTrips()
+
+    }
+
     return (
         <TripsContext.Provider
         value={
         {
             newTrip,
             gatherTrips,
+            addMoment,
             trips,
         }
         }

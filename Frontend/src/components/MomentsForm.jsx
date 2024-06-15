@@ -5,7 +5,7 @@ import { accomidationIcon, cateringIcon, chevronDown, chevronUp, museumIcon, pla
 import { useTripsContext } from "../contex/TripsContext"
 
 const MomentsForm = () => {
-  const { trips, gatherTrips } = useTripsContext()
+  const { trips, gatherTrips,addMoment } = useTripsContext()
   const [selectedAdventure, setSelectedAdventure] = useState({
     adventure: "Select an adventure",  
   })
@@ -26,7 +26,6 @@ const MomentsForm = () => {
       gatherTrips()
     }, [])
 
-
     useEffect(() => {
       place ?
       fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${selectedAdventure.coordinates.lon},${selectedAdventure.coordinates.lat}&limit=20&apiKey=${autofillKey}
@@ -42,9 +41,27 @@ const MomentsForm = () => {
       : setPlaceDropdown(false)
 
     },[place])
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      await addMoment(form, selectedAdventure._id);
+      setForm({
+        name: '',
+        category: '',
+        photos: []
+      }),
+      setSelectedAdventure({
+        adventure: "Select an adventure",  
+      });
+      setPlace("")
+
+    }
+
+
+
   return (
     <FormSyled>
-        <form action="">
+        <form onSubmit={handleSubmit}>
             <div className="destination form-div">
               <div className="adventureSelect">
               <span onClick={() => adventuresDropdown ? setAdventuresDropdown(false) : setAdventuresDropdown(true)}>{selectedAdventure.adventure} {adventuresDropdown ? chevronUp : chevronDown}</span>
@@ -71,9 +88,9 @@ const MomentsForm = () => {
                   categoryDropdown && 
                 <div className="dropdown">
                   <ul>
-                    <li onClick={() => setCategory("catering")}>{cateringIcon} Food and drink</li>
-                    <li onClick={() => setCategory("museum")}>{museumIcon} Mesuems</li>
-                    <li onClick={() => setCategory("accommodation")}>{accomidationIcon} Hotel</li>
+                    <li key={"catering"} onClick={() => setCategory("catering")}>{cateringIcon} Food and drink</li>
+                    <li key={"Museums"} onClick={() => setCategory("museum")}>{museumIcon} Mesuems</li>
+                    <li key={"accommodation"} onClick={() => setCategory("accommodation")}>{accomidationIcon} Hotel</li>
                   </ul>
                 </div>
                 }
@@ -87,12 +104,11 @@ const MomentsForm = () => {
                     {
                       placeResults.map((i) => {
                         return (
-                          <li key={i.id} onClick={() => {
+                          <li key={i.name} onClick={() => {
                             setForm({
-                             ...form, places: [...form.places, {
-                              category: i.category,
-                              name: i.name
-                             }]
+                             ...form,
+                             name: i.name,
+                             category: category
                             })
                             setPlace(`${i.name}`);
                             setPlaceDropdown(false)
@@ -104,6 +120,7 @@ const MomentsForm = () => {
                 </div>
               }
             </div>
+            <button type="submit">Submit</button>
         </form>
     </FormSyled>
   )
