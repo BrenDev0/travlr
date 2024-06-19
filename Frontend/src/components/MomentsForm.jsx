@@ -15,6 +15,7 @@ const MomentsForm = () => {
   const [placeDropdown, setPlaceDropdown] = useState(false)
   const [categoryDropdown, setCategoryDropdown] = useState(false)
   const [category, setCategory] = useState("catering")
+  const [photos, setPhotos] = useState([])
     const [form, setForm] = useState({
         name: '',
         category: '',
@@ -54,6 +55,7 @@ const MomentsForm = () => {
         adventure: "Select an adventure",  
       });
       setPlace("")
+      console.log(photos)
 
     }
 
@@ -123,7 +125,7 @@ const MomentsForm = () => {
               }
             </div>
             <div className="form-div">
-              <input type="file" />
+              <input type="file"  onChange={(e) => setForm({...form, photos: [...form.photos, e.target.files[0]]}) } />
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -192,7 +194,7 @@ position: absolute;
 }
 
 .place{
-  right: 4%;
+  right: 40%;
   top: 17%;
 }
 

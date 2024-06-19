@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Layout from "../styles/Layout";
 import { useGlobalContext } from "../contex/GlobalContex";
-import RegisterSkeleton from "../components/skeletons/RegisterSkeleton";
+import HomeSkeleton from "../components/skeletons/HomeSkeleton"
 import MomentsForm from "../components/MomentsForm";
 
 const Moments = () => {
@@ -26,7 +26,7 @@ const Moments = () => {
   }, [user]);
 
   return isLoading ? (
-    <RegisterSkeleton />
+    <HomeSkeleton />
   ) : (
     <Layout>
       <RegisterStyled>
