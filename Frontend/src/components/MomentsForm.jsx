@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
-import { accomidationIcon, cateringIcon, chevronDown, chevronUp, museumIcon, naturalIcon, placeIcon, spaIcon } from '../utils/icons'
+import { accomidationIcon, cateringIcon, chevronDown, chevronUp, imageIcon, museumIcon, naturalIcon, placeIcon, spaIcon } from '../utils/icons'
 import { useTripsContext } from "../contex/TripsContext"
 
 const MomentsForm = () => {
@@ -90,11 +90,11 @@ const MomentsForm = () => {
                   categoryDropdown && 
                 <div className="dropdown">
                   <ul>
-                    <li key={"catering"} onClick={() => setCategory("catering")}>{cateringIcon} Food and drink</li>
-                    <li key={"Museums"} onClick={() => setCategory("museum")}>{museumIcon} Mesuems</li>
-                    <li key={"accommodation"} onClick={() => setCategory("accommodation")}>{accomidationIcon} Hotel</li>
-                    <li key={"leisure"} onClick={() => setCategory("leisure")}>{spaIcon} Parks & Leisure</li>
-                    <li key={"natural"} onClick={() => setCategory("natural")}>{naturalIcon} Nature</li>
+                    <li key={"catering"} onClick={() => {setCategory("catering"); setCategoryDropdown(false)}}>{cateringIcon} Food and drink</li>
+                    <li key={"Museums"} onClick={() => {setCategory("museum"); setCategoryDropdown(false)}}>{museumIcon} Mesuems</li>
+                    <li key={"accommodation"} onClick={() => {setCategory("accommodation"); setCategoryDropdown(false)}}>{accomidationIcon} Hotel</li>
+                    <li key={"leisure"} onClick={() => {setCategory("leisure"); setCategoryDropdown(false)}}>{spaIcon} Parks & Leisure</li>
+                    <li key={"natural"} onClick={() => {setCategory("natural"); setCategoryDropdown(false)}}>{naturalIcon} Nature</li>
                   </ul>
                 </div>
                 }
@@ -125,7 +125,9 @@ const MomentsForm = () => {
               }
             </div>
             <div className="form-div">
-              <input type="file"  onChange={(e) => setForm({...form, photos: [...form.photos, e.target.files[0]]}) } />
+              <input type="file" id='images' onChange={(e) => setForm({...form, photos: [...form.photos, e.target.files[0]]}) } style={{display: "none"}}/>
+              <label htmlFor="images">{imageIcon}</label>
+
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -224,6 +226,15 @@ position: absolute;
 }
 
 .fa-circle-chevron-up:hover{
+  cursor: pointer;
+}
+
+.fa-images{
+  color: var(--white);
+  font-size: 2rem;
+}
+
+.fa-images:hover {
   cursor: pointer;
 }
 
