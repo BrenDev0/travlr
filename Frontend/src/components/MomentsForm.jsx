@@ -45,7 +45,13 @@ const MomentsForm = () => {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      await addMoment(form, selectedAdventure._id);
+      const formData = new FormData()
+      formData.append('name', form.name )
+      formData.append('category', form.category)
+      form.photos.forEach((pic) => formData.append('photos', pic))
+  
+      await addMoment(formData, selectedAdventure._id);
+      
       setForm({
         name: '',
         category: '',
@@ -55,15 +61,14 @@ const MomentsForm = () => {
         adventure: "Select an adventure",  
       });
       setPlace("")
-      console.log(photos)
-
+    
     }
 
 
 
   return (
     <FormSyled>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} encType='multipart/form-data' >
             <div className="destination form-div">
               <div className="adventureSelect">
               <span onClick={() => adventuresDropdown ? setAdventuresDropdown(false) : setAdventuresDropdown(true)}>{selectedAdventure.adventure} {adventuresDropdown ? chevronUp : chevronDown}</span>
@@ -125,7 +130,7 @@ const MomentsForm = () => {
               }
             </div>
             <div className="form-div">
-              <input type="file" id='images' onChange={(e) => setForm({...form, photos: [...form.photos, e.target.files[0]]}) } style={{display: "none"}}/>
+              <input type="file" name='photos' id='images' accept='.png, .jpg, .jpeg' onChange={(e) => setForm({...form, photos: [...form.photos, e.target.files[0]]}) } style={{display: "none"}}/>
               <label htmlFor="images">{imageIcon}</label>
 
             </div>

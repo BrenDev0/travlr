@@ -1,6 +1,7 @@
 const Trip = require("../models/tripsModel")
 const User = require("../models/userModel")
 
+
 // register a new trip
 const registerTrip =  async(req, res) => {
     const { adventure, country, city, coordinates, } =  req.body;
@@ -47,18 +48,27 @@ const getTrips = async (req, res) => {
 const addMoment = async (req, res) => {
     try {
         const { id } = req.params
-        const moment = req.body
+        const { name, category} = req.body
+        const photos = req.files
+        console.log(photos)
+        
+        
+       
         await Trip.findByIdAndUpdate(
             {_id: id},
         {
             $push: {
-                moments: moment
+                moments: {
+                    name, 
+                    category,
+                    photos
+                }
             }
         }
         )
         res.status(200).json({message: "Moment added"})
     } catch (error) {
-        return res.status(500).json(error)
+        return res.status(500).json({message: error.message})
         
     }
 }

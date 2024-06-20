@@ -30,7 +30,7 @@ export const TripsProvider = ({children}) => {
     }
 
     const addMoment = async (moment, id) => {
-        await axios.put(`${TRIPS_URL}add-moment/${id}`, moment)
+        await axios.put(`${TRIPS_URL}add-moment/${id}`, moment, {headers:{'Content-Type': 'multipart/form-data'} } )
         gatherTrips()
 
     }
