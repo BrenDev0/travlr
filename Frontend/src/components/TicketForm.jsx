@@ -75,7 +75,7 @@ const handleSubmit = async (e) => {
   newTrip(trip)
   setDepart("")
   setDestination("")
-  setTrip({...trip, coordinates:{}})
+  setTrip({...trip, coordinates:{}, adventure: ''})
 }
 
 

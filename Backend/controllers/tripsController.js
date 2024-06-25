@@ -48,12 +48,8 @@ const getTrips = async (req, res) => {
 const addMoment = async (req, res) => {
     try {
         const { id } = req.params
-        const { name, category} = req.body
+        const { name, category, address, lat, lon} = req.body
         const photos = req.files
-        console.log(photos)
-        
-        
-       
         await Trip.findByIdAndUpdate(
             {_id: id},
         {
@@ -61,6 +57,11 @@ const addMoment = async (req, res) => {
                 moments: {
                     name, 
                     category,
+                    address,
+                    coordinates: {
+                        lat: parseFloat(lat),
+                        lon: parseFloat(lon)
+                    },
                     photos
                 }
             }

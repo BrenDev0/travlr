@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import { autofillKey } from '../utils/keys'
 import { accomidationIcon, cateringIcon, chevronDown, chevronUp, imageIcon, museumIcon, naturalIcon, placeIcon, spaIcon } from '../utils/icons'
 import { useTripsContext } from "../contex/TripsContext"
+import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import ChangeMapCenter from './ChangeMapCenter'
+import PhotosCard from './PhotosCard'
 
 const MomentsForm = () => {
-  const { trips, gatherTrips,addMoment } = useTripsContext()
+  const { trips, gatherTrips, addMoment } = useTripsContext()
   const [selectedAdventure, setSelectedAdventure] = useState({
     adventure: "Select an adventure",  
   })
@@ -15,12 +19,17 @@ const MomentsForm = () => {
   const [placeDropdown, setPlaceDropdown] = useState(false)
   const [categoryDropdown, setCategoryDropdown] = useState(false)
   const [category, setCategory] = useState("catering")
-  const [photos, setPhotos] = useState([])
+  const [coordinates, setCoordinates] = useState({lat: 51.505 , lon:-0.09, zoom: 20 })
+  
     const [form, setForm] = useState({
         name: '',
         category: '',
+        address: '',
+        coordinates: {},
         photos: []
     })
+
+    
 
     
     useEffect(() =>{
@@ -34,8 +43,13 @@ const MomentsForm = () => {
       .then((data) => {
         setPlaceResults(data.features.map((i) => {
           return {
+            name:i.properties.address_line1,
             category: category,
-            name:i.properties.address_line1
+            address: i.properties.address_line2,
+            coordinates: {
+              lat: i.properties.lat,
+              lon: i.properties.lon,
+            }
           }
         }))
       })
@@ -48,6 +62,9 @@ const MomentsForm = () => {
       const formData = new FormData()
       formData.append('name', form.name )
       formData.append('category', form.category)
+      formData.append('address', form.address)
+      formData.append('lat', form.coordinates.lat)
+      ;formData.append('lon', form.coordinates.lon)
       form.photos.forEach((pic) => formData.append('photos', pic))
   
       await addMoment(formData, selectedAdventure._id);
@@ -55,6 +72,8 @@ const MomentsForm = () => {
       setForm({
         name: '',
         category: '',
+        address: '',
+        coordinates: {},
         photos: []
       }),
       setSelectedAdventure({
@@ -78,7 +97,11 @@ const MomentsForm = () => {
                   {
                     trips.map((trip) => {
                       return(
-                        <li key={trip._id} onClick={() => {setSelectedAdventure(trip); setAdventuresDropdown(false)}}>{trip.adventure}</li>
+                        <li key={trip._id} onClick={() => {
+                          setSelectedAdventure(trip); 
+                          setAdventuresDropdown(false), 
+                          setCoordinates({lat: trip.coordinates.lat, lon: trip.coordinates.lon, zoom: 15})
+                        }}>{trip.adventure}</li>
                       )
                     })
                   }
@@ -117,7 +140,14 @@ const MomentsForm = () => {
                             setForm({
                              ...form,
                              name: i.name,
-                             category: category
+                             category: category,
+                             address: i.address,
+                             coordinates:i.coordinates,
+                            })
+                            setCoordinates({
+                              lat: i.coordinates.lat,
+                              lon: i.coordinates.lon,
+                              zoom: 25
                             })
                             setPlace(`${i.name}`);
                             setPlaceDropdown(false)
@@ -136,6 +166,24 @@ const MomentsForm = () => {
             </div>
             <button type="submit">Submit</button>
         </form>
+        {
+          selectedAdventure.coordinates && 
+          <div className="preview">
+        <MapContainer  scrollWheelZoom={false}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {
+          form.name !== "" && 
+            <Marker position={coordinates}>
+              <Popup>{form.name} <br /> <PhotosCard photos={form.photos} width={'400px'} imageWidth={'75px'} /> <br /> {form.address} </Popup>
+            </Marker>
+        }
+        <ChangeMapCenter coordinates={coordinates} zoom={coordinates.zoom} />
+      </MapContainer>
+        </div>
+        }
     </FormSyled>
   )
 }
@@ -147,14 +195,30 @@ height: 100%;
 
 
 form{
-  width: 100%;
+ width: 100%;
+ height: 15%;
  display: flex;
  justify-content: space-around;
  align-items: center;
  background: var(--orange);
  box-shadow: 0 2px 7px var(--black);
- padding:15px
+ padding:15px;
+ 
 }
+
+.preview {
+  width: 100%;
+  height: 85%;
+  padding: 10px;
+  position: relative;
+ z-index: 0;
+ 
+}
+
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+  }
 
 
 
@@ -193,6 +257,7 @@ border: 2px solid var(--gray);
 border-radius: 0 0 10px 10px;
 background: var(--white);
 position: absolute;
+z-index: 1;
 }
 
 .city{
@@ -201,8 +266,8 @@ position: absolute;
 }
 
 .place{
-  right: 40%;
-  top: 17%;
+  right: 20%;
+  top: 20%;
 }
 
 .dropdown li {

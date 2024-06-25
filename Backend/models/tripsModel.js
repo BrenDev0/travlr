@@ -7,6 +7,14 @@ const MomentsSchema = new mongoose.Schema({
   category: {
     type: String,
   },
+  coordinates:{
+    type: Object,
+    required: true
+  },
+  address:{
+    type: String,
+    required: true
+  },
   photos: []
 });
 
