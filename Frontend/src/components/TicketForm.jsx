@@ -253,7 +253,7 @@ const FormStyled = styled.div`
 
   #arrivalDD {
     position: absolute;
-    top: 71%;
+    top: 62%;
   }
 
   #departureDD {
