@@ -49,17 +49,17 @@ gatherTrips()
               )
           })
         }
-        {/* {
+        {
           moments.length > 0 && moments.map((m) => {
             return (
               <Marker key={m._id} position={[m.coordinates.lat, m.coordinates.lon]}>
               <Popup>
-                {m.name} <br/> <PhotosCard type="upload" photos={m.photos}width={'400px'} imageWidth={'75px'} /> <br/> {m.address}
+                {m.name} <br/> <PhotosCard preview={false} photos={m.photos}width={'400px'} imageWidth={'75px'} /> <br/> {m.address}
               </Popup>
             </Marker>
             )
           })
-        } */}
+        } 
         <ChangeMapCenter coordinates={coordinates} zoom={coordinates.zoom} />
       </MapContainer>
     </MapStyled>

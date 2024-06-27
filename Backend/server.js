@@ -1,6 +1,7 @@
 require("dotenv").config();
 const userRoutes = require("./routes/userRoutes");
 const tripsRoute = require("./routes/tripsRoutes")
+const imageRoute = require("./routes/imageRoute")
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const { db } = require("./db/db");
@@ -23,6 +24,7 @@ app.use(cookieParser());
 app.use("/api/auth", userRoutes);
 app.use("/api/trips", tripsRoute )
 app.use(express.static('uploads'))
+app.use('/images', imageRoute )
 
 
 const server = () => {

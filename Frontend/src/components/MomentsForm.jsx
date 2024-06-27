@@ -177,7 +177,7 @@ const MomentsForm = () => {
         {
           form.name !== "" && 
             <Marker position={coordinates}>
-              <Popup>{form.name} <br /> <PhotosCard photos={form.photos} width={'400px'} imageWidth={'75px'} /> <br /> {form.address} </Popup>
+              <Popup>{form.name} <br /> <PhotosCard preview={true} photos={form.photos} width={'400px'} imageWidth={'75px'} /> <br /> {form.address} </Popup>
             </Marker>
         }
         <ChangeMapCenter coordinates={coordinates} zoom={coordinates.zoom} />
