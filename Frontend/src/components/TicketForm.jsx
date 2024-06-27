@@ -13,7 +13,6 @@ const TicketForm = ({ width, height }) => {
   const [destination, setDestination] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [dropdownTo, setDropdownTo] = useState(false);
-  const [dropdownFrom, setDropdownFrom] = useState(false);
   const [trip, setTrip] = useState({
     adventure: "" ,
     country: destination.country,
@@ -47,27 +46,7 @@ const TicketForm = ({ width, height }) => {
       : setDropdownTo(false);
   }, [destination]);
 
-  useEffect(() => {
-    depart
-      ? fetch(
-          `https://api.geoapify.com/v1/geocode/autocomplete?text=${depart}&apiKey=${autofillKey}`
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data.features)
-            setSearchData(
-              data.features.map((d) => {
-                return {
-                  country: d.properties.country,
-                  city: d.properties.city,
-                  id: d.properties.place_id,
-                  coordinates: d.geometry.coordinates
-                };
-              })
-            );
-          })
-      : setDropdownFrom(false);
-  }, [depart]);
+
 
 //--------------- submit form ---------------
 const handleSubmit = async (e) => {
@@ -253,13 +232,10 @@ const FormStyled = styled.div`
 
   #arrivalDD {
     position: absolute;
-    top: 62%;
+    top: 59%;
   }
 
-  #departureDD {
-    position: absolute;
-    top: 50%;
-  }
+  
 
   .dropdown li {
     padding: 10px;
