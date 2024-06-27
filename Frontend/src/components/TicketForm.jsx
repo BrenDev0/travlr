@@ -9,14 +9,13 @@ import { searchIcon } from "../utils/icons";
 const TicketForm = ({ width, height }) => {
   const { error, setError } = useGlobalContext()
   const { newTrip } = useTripsContext()
-  const [depart, setDepart] = useState("");
   const [destination, setDestination] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [dropdownTo, setDropdownTo] = useState(false);
   const [trip, setTrip] = useState({
     adventure: "" ,
-    country: destination.country,
-    city: destination.city,
+    country: "",
+    city: "",
     coordinates: {},
     arrival: "",
     departure: ""
@@ -36,6 +35,7 @@ const TicketForm = ({ width, height }) => {
               data.features.map((d) => {
                 return {
                   country: d.properties.country,
+                  state: d.properties.state,
                   city: d.properties.city,
                   id: d.properties.place_id,
                   coordinates: d.geometry.coordinates
@@ -52,7 +52,6 @@ const TicketForm = ({ width, height }) => {
 const handleSubmit = async (e) => {
   e.preventDefault()
   newTrip(trip)
-  setDepart("")
   setDestination("")
   setTrip({...trip, coordinates:{}, adventure: ''})
 }
@@ -94,7 +93,7 @@ const handleSubmit = async (e) => {
                     <li
                       key={i.id}
                       onClick={() => {
-                        setTrip({...trip, country: i.country, city: i.city, coordinates: {
+                        setTrip({...trip, country: i.country, state: i.state, city: i.city, coordinates: {
                           lat: i.coordinates[1],
                           lon: i.coordinates[0],
                         }});

@@ -4,13 +4,14 @@ const User = require("../models/userModel")
 
 // register a new trip
 const registerTrip =  async(req, res) => {
-    const { adventure, country, city, coordinates, } =  req.body;
+    const { adventure, country, state, city, coordinates, } =  req.body;
     const user = await User.findById(req.user)
     
     const trip = Trip({
         user,
         adventure,
         country,
+        state,
         city,
         coordinates: {
                 lat: coordinates.lat,
