@@ -12,13 +12,14 @@ const Adventures = () => {
   
   useEffect(() => {
     getUser();
-    gatherTrips();
     setTimeout(() => {
       if (user === null) {
         return null;
       }
       if (user) {
-        return setIsLoading(false);
+        gatherTrips();
+        return setIsLoading(false)
+        
       }
       if (!user) {
         return navigate("/login");

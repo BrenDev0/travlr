@@ -1,11 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMap, Marker, Popup } from "react-leaflet";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import { useTripsContext } from "../contex/TripsContext";
+import ChangeMapCenter from "./ChangeMapCenter";
+import PhotosCard from "./PhotosCard";
 
 const Map = () => {
 const { trips, gatherTrips } = useTripsContext()
+
+const [coordinates, setCoordinates] = useState({
+  lat: 51.505,
+  lon: -0.09,
+  zoom: 3
+})
+
+const [moments, setMoments] = useState([])
 
 useEffect(() => {
 gatherTrips()
@@ -13,7 +23,7 @@ gatherTrips()
 
   return (
     <MapStyled>
-      <MapContainer center={[51.505, -0.09]} zoom={3} scrollWheelZoom={false}>
+      <MapContainer scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -21,14 +31,36 @@ gatherTrips()
         {
           trips && trips.map((i) => {
               return(
-                <Marker key={i._id} position={[i.coordinates.lat, i.coordinates.lon]}>
+                <Marker eventHandlers={{
+                  click:
+                  () => {
+                    setCoordinates({
+                      lat: i.coordinates.lat,
+                      lon: i.coordinates.lon,
+                      zoom: 12
+                    })
+                    setMoments(i.moments)
+                  }
+                }} key={i._id} position={[i.coordinates.lat, i.coordinates.lon]}>
                   <Popup>
-                    {i.city}, {i.country}
+                    {i.adventure},<br/> {i.city}, {i.state} <br/> --{i.country}
                   </Popup>
                 </Marker>
               )
           })
         }
+        {/* {
+          moments.length > 0 && moments.map((m) => {
+            return (
+              <Marker key={m._id} position={[m.coordinates.lat, m.coordinates.lon]}>
+              <Popup>
+                {m.name} <br/> <PhotosCard type="upload" photos={m.photos}width={'400px'} imageWidth={'75px'} /> <br/> {m.address}
+              </Popup>
+            </Marker>
+            )
+          })
+        } */}
+        <ChangeMapCenter coordinates={coordinates} zoom={coordinates.zoom} />
       </MapContainer>
     </MapStyled>
   );

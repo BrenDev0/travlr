@@ -22,6 +22,7 @@ app.use(cookieParser());
 //routes
 app.use("/api/auth", userRoutes);
 app.use("/api/trips", tripsRoute )
+app.use(express.static('uploads'))
 
 
 const server = () => {

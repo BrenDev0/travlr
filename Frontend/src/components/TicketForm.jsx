@@ -15,6 +15,7 @@ const TicketForm = ({ width, height }) => {
   const [trip, setTrip] = useState({
     adventure: "" ,
     country: "",
+    state: "",
     city: "",
     coordinates: {},
     arrival: "",
@@ -97,12 +98,11 @@ const handleSubmit = async (e) => {
                           lat: i.coordinates[1],
                           lon: i.coordinates[0],
                         }});
-                        setDestination(`${i.city}, ${i.country}`);
+                        setDestination(`${i.city}, ${i.state} --${i.country}`);
                         setDropdownTo(false);
                       }}
                     >
-                      <i className="fa-solid fa-earth-americas"></i> {i.city},{" "}
-                      {i.country}
+                      <i className="fa-solid fa-earth-americas"></i> {i.city}, {i.state} --{i.country}
                     </li>
                   );
                 })}
@@ -123,6 +123,7 @@ const handleSubmit = async (e) => {
           <span><input type="text" /> {searchIcon}</span>
         </form>
       </div>
+      {error && <p>{error}</p>}
     </FormStyled>
   );
 };
@@ -232,6 +233,7 @@ const FormStyled = styled.div`
   #arrivalDD {
     position: absolute;
     top: 59%;
+    z-index: 2;
   }
 
   

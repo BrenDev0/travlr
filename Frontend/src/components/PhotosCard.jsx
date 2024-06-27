@@ -6,7 +6,7 @@ const PhotosCard = ({photos, width, height, imageWidth}) => {
   return (
     <CardSyled style={{width: width}}>
       {
-        photos.map((photo) =>{
+       photos.map((photo) =>{
             return (
                 <img style={{width: imageWidth ,height: imageWidth}} src={URL.createObjectURL(photo)} alt="" />
             )

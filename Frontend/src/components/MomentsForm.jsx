@@ -119,7 +119,7 @@ const MomentsForm = () => {
                 <div className="dropdown">
                   <ul>
                     <li key={"catering"} onClick={() => {setCategory("catering"); setCategoryDropdown(false)}}>{cateringIcon} Food and drink</li>
-                    <li key={"Museums"} onClick={() => {setCategory("museum"); setCategoryDropdown(false)}}>{museumIcon} Mesuems</li>
+                    <li key={"Museums"} onClick={() => {setCategory("entertainment.museum"); setCategoryDropdown(false)}}>{museumIcon} Mesuems</li>
                     <li key={"accommodation"} onClick={() => {setCategory("accommodation"); setCategoryDropdown(false)}}>{accomidationIcon} Hotel</li>
                     <li key={"leisure"} onClick={() => {setCategory("leisure"); setCategoryDropdown(false)}}>{spaIcon} Parks & Leisure</li>
                     <li key={"natural"} onClick={() => {setCategory("natural"); setCategoryDropdown(false)}}>{naturalIcon} Nature</li>
