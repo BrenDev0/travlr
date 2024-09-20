@@ -37,23 +37,25 @@ const MomentsForm = () => {
     }, [])
 
     useEffect(() => {
-      place ?
-      fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${selectedAdventure.coordinates.lon},${selectedAdventure.coordinates.lat}&limit=20&apiKey=${autofillKey}
-      `).then((res) => res.json())
-      .then((data) => {
-        setPlaceResults(data.features.map((i) => {
-          return {
-            name:i.properties.address_line1,
-            category: category,
-            address: i.properties.address_line2,
-            coordinates: {
-              lat: i.properties.lat,
-              lon: i.properties.lon,
-            }
-          }
-        }))
-      })
-      : setPlaceDropdown(false)
+      if(place.length === 1 || place.length % 3 === 0 && place.length !== 0){
+        fetch(`https://api.geoapify.com/v2/places?categories=${category}&name=${place}&bias=proximity:${selectedAdventure.coordinates.lon},${selectedAdventure.coordinates.lat}&limit=20&apiKey=${autofillKey}
+          `).then((res) => res.json())
+          .then((data) => {
+            setPlaceResults(data.features.map((i) => {
+              return {
+                name: i.properties.address_line1,
+                category: category,
+                address: i.properties.address_line2,
+                coordinates: {
+                  lat: i.properties.lat,
+                  lon: i.properties.lon,
+                }
+              }
+            }))
+          }).then(() => setPlaceDropdown(true))
+      }else if(place.length === 0){
+        setPlaceDropdown(false)
+      }
 
     },[place])
 
@@ -64,7 +66,7 @@ const MomentsForm = () => {
       formData.append('category', form.category)
       formData.append('address', form.address)
       formData.append('lat', form.coordinates.lat)
-      ;formData.append('lon', form.coordinates.lon)
+      formData.append('lon', form.coordinates.lon)
       form.photos.forEach((pic) => formData.append('photos', pic))
   
       await addMoment(formData, selectedAdventure._id);
@@ -129,7 +131,7 @@ const MomentsForm = () => {
               </div>
             </div>
             <div className="form-div">
-              <input type="text" required value={place} placeholder='location...' onChange={(e) => {setPlace(e.target.value), setPlaceDropdown(true)}} />
+              <input type="text" required value={place} placeholder='location...' onChange={(e) => {setPlace(e.target.value)}} />
               {
                 placeDropdown && <div className="dropdown place">
                   <ul>

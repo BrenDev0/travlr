@@ -10,14 +10,14 @@ const Login = () => {
   const navigate = useNavigate();
   const { user, isLoading, setIsLoading } = useGlobalContext();
   useEffect(() => {
-    if (user === null) {
-      return null;
-    }
     if (user) {
-      navigate("/");
+      return setIsLoading(false);
     }
-    if (!user) {
-      setIsLoading(false);
+    else if (!user) {
+      return navigate("/login");
+    }
+    else{
+      return null;
     }
   }, [user]);
   return isLoading ? (
